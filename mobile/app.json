@@ -1,0 +1,62 @@
+{
+  "expo": {
+    "name": "SES Educare",
+    "slug": "ses-educare",
+    "scheme": [
+      "seseducare",
+      "com.seseducare.lms"
+    ],
+    "version": "1.0.49",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "primaryColor": "#1e3a8a",
+    "splash": {
+      "image": "./assets/logo.png",
+      "backgroundColor": "#1e3a8a",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.seseducare.lms",
+      "buildNumber": "50",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.seseducare.lms",
+      "versionCode": 50,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "permissions": [
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow The Vits School app to scan school attendance and gate pass QR codes."
+        }
+      ],
+      "expo-web-browser"
+    ],
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c9959309-6936-4f7e-a85f-635980342f04"
+      },
+      "googleAndroidClientId": "207858797235-2fmsp14eku50mbnuo80529sugtaks6sg.apps.googleusercontent.com",
+      "googleWebClientId": "207858797235-1i5rnv0kehqaf34a3cj04el6r4i5rvng.apps.googleusercontent.com"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* Custom glow effects */
+.glow-primary {
+  box-shadow: 0 0 50px -10px rgba(99, 102, 241, 0.3);
+}
+
+.glow-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px -10px rgba(99, 102, 241, 0.2);
+}
