@@ -15,7 +15,13 @@ export const getHomeRouteForRole = (role) => {
   if (isTeacherRole(role)) return '/teacher/dashboard';
   if (role === 'parent') return '/parent/dashboard';
   if (role === 'accountant') return '/accountant/dashboard';
-  return '/student/dashboard';
+  if (role === 'student') return '/student/dashboard';
+  if (role === 'admission_officer') return '/school/admissions';
+  if (role === 'hr_manager' || role === 'staff') return '/school/leaves';
+  if (role === 'librarian') return '/school/library';
+  if (role === 'security_staff') return '/school/visitor-pass';
+  if (role === 'transport_manager') return '/school/transport';
+  return null;
 };
 
 export const isRoleAllowed = (userRole, allowedRoles) => {

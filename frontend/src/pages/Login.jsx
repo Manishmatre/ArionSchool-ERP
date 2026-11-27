@@ -17,13 +17,14 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const { user, login, googleLogin } = useAuth();
+  const { user, login, googleLogin, logout } = useAuth();
   const navigate = useNavigate();
 
   // Redirect automatically whenever authenticated user state is active
   useEffect(() => {
     if (user?.role) {
-      navigate(getHomeRouteForRole(user.role), { replace: true });
+      const home = getHomeRouteForRole(user.role);
+      if (home) navigate(home, { replace: true });
     }
   }, [user, navigate]);
 
@@ -35,8 +36,13 @@ const Login = () => {
     setGoogleLoading(true);
     try {
       const data = await googleLogin(response.credential);
+      const home = getHomeRouteForRole(data?.user?.role);
+      if (!home) {
+        logout();
+        throw new Error('This account does not have a configured school workspace. Contact your administrator.');
+      }
       toast.success('Signed in with Google successfully!');
-      navigate(getHomeRouteForRole(data?.user?.role), { replace: true });
+      navigate(home, { replace: true });
     } catch (error) {
       console.error('Google login error:', error);
       const { message } = extractApiError(error);
@@ -106,8 +112,13 @@ const Login = () => {
     setLoading(true);
     try {
       const data = await login(identifier, password);
+      const home = getHomeRouteForRole(data?.user?.role);
+      if (!home) {
+        logout();
+        throw new Error('This account does not have a configured school workspace. Contact your administrator.');
+      }
       toast.success('Login successful!');
-      navigate(getHomeRouteForRole(data?.user?.role), { replace: true });
+      navigate(home, { replace: true });
     } catch (error) {
       console.error('Login error:', error);
       const resolvedFieldErrors = error?.fieldErrors;

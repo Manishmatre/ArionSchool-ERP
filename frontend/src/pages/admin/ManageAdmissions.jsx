@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../context/AuthContext';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
 import Pagination from '../../components/Pagination';
@@ -25,6 +26,8 @@ const PRIORITY_VARIANT = { low: 'neutral', medium: 'warning', high: 'danger' };
 
 const ManageAdmissions = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const studentCreatePath = user?.role === 'super_admin' ? '/admin/students/add' : '/school/students/add';
   const [admissions, setAdmissions] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -186,7 +189,7 @@ const ManageAdmissions = () => {
           title="Manage Admissions"
           subtitle="View and manage all student admissions"
           icon={FiUserCheck}
-          actions={<Button icon={FiUserPlus} onClick={() => navigate('/admin/students/add')}>New Admission</Button>}
+          actions={<Button icon={FiUserPlus} onClick={() => navigate(studentCreatePath)}>New Admission</Button>}
         />
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

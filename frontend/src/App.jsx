@@ -166,7 +166,7 @@ import StudentReviews from './pages/student/StudentReviews';
 
 // Protected Route Component with School Role Equivalence
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -183,10 +183,18 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 
   if (allowedRoles && !isRoleAllowed(user.role, allowedRoles)) {
     const home = getHomeRouteForRole(user.role);
-    if (location.pathname === home) {
-      return <Navigate to="/login" replace />;
-    }
-    return <Navigate to={home} replace />;
+    if (home && location.pathname !== home) return <Navigate to={home} replace />;
+    return (
+      <main className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
+        <section className="max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-sm">
+          <h1 className="text-xl font-bold text-slate-900">Workspace unavailable</h1>
+          <p className="mt-2 text-sm text-slate-600">Your account role does not have a configured workspace. Ask your school administrator to review your access.</p>
+          <button type="button" onClick={() => { logout(); window.location.assign('/login'); }} className="mt-5 rounded-lg bg-primary-700 px-4 py-2 text-sm font-semibold text-white hover:bg-primary-800">
+            Return to sign in
+          </button>
+        </section>
+      </main>
+    );
   }
 
   return children;
@@ -1744,6 +1752,14 @@ function App() {
             }
           />
           <Route
+            path="/school/admissions"
+            element={
+              <ProtectedRoute allowedRoles={['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin', 'admission_officer']}>
+                <ManageAdmissions />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/school/notifications"
             element={
               <ProtectedRoute allowedRoles={['school_admin']}>
@@ -1754,7 +1770,7 @@ function App() {
           <Route
             path="/school/students"
             element={
-              <ProtectedRoute allowedRoles={['school_admin', 'teacher', 'class_teacher']}>
+              <ProtectedRoute allowedRoles={['school_admin', 'teacher', 'class_teacher', 'admission_officer']}>
                 <CampusStudents />
               </ProtectedRoute>
             }
@@ -1762,7 +1778,7 @@ function App() {
           <Route
             path="/school/students/add"
             element={
-              <ProtectedRoute allowedRoles={['school_admin']}>
+              <ProtectedRoute allowedRoles={['school_admin', 'school_owner', 'admission_officer']}>
                 <CampusAddStudent />
               </ProtectedRoute>
             }
@@ -1770,7 +1786,7 @@ function App() {
           <Route
             path="/school/students/:id"
             element={
-              <ProtectedRoute allowedRoles={['school_admin', 'teacher', 'class_teacher']}>
+              <ProtectedRoute allowedRoles={['school_admin', 'teacher', 'class_teacher', 'admission_officer']}>
                 <StudentDetails />
               </ProtectedRoute>
             }

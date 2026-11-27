@@ -27,6 +27,11 @@ const Sidebar = ({ role, user, isOpen = true, toggleSidebar = () => { } }) => {
     (role === 'teacher' || role === 'class_teacher') ? 'Teacher Portal' :
     role === 'parent' ? 'Parent & Guardian Portal' :
     role === 'accountant' ? 'Accounts Desk' :
+    role === 'admission_officer' ? 'Admissions Office' :
+    role === 'hr_manager' ? 'Human Resources' :
+    role === 'librarian' ? 'Library Desk' :
+    role === 'security_staff' ? 'Campus Security' :
+    role === 'transport_manager' ? 'Transport Desk' :
     'Student Portal';
 
   // Structured Multi-Campus School Owner / Super Admin Navigation
@@ -637,13 +642,35 @@ const Sidebar = ({ role, user, isOpen = true, toggleSidebar = () => { } }) => {
     }
   ];
 
+  const operationalMenus = {
+    admission_officer: [
+      { path: '/school/admissions', icon: FiMail, label: 'Admissions', matchPrefixes: ['/school/admissions'] },
+      { path: '/school/students', icon: FiUsers, label: 'Student Records', matchPrefixes: ['/school/students'] }
+    ],
+    hr_manager: [
+      { path: '/school/leaves', icon: FiCalendar, label: 'Leave Management', matchPrefixes: ['/school/leaves'] }
+    ],
+    librarian: [
+      { path: '/school/library', icon: FiBookOpen, label: 'Library Circulation', matchPrefixes: ['/school/library'] }
+    ],
+    security_staff: [
+      { path: '/school/visitor-pass', icon: FiShield, label: 'Visitor Gate Pass', matchPrefixes: ['/school/visitor-pass'] }
+    ],
+    transport_manager: [
+      { path: '/school/transport', icon: FiTruck, label: 'Transport & GPS Fleet', matchPrefixes: ['/school/transport'] }
+    ],
+    staff: [
+      { path: '/school/leaves', icon: FiCalendar, label: 'Leave Management', matchPrefixes: ['/school/leaves'] }
+    ]
+  };
+
   const menu =
     (role === 'super_admin' || role === 'school_owner') ? superAdminMenu :
     (role === 'franchise_admin' || role === 'school_admin' || role === 'principal' || role === 'vice_principal') ? franchiseAdminMenu :
     (role === 'teacher' || role === 'class_teacher') ? teacherMenu :
     role === 'parent' ? parentMenu :
     role === 'accountant' ? accountantMenu :
-    studentMenu;
+    operationalMenus[role] || studentMenu;
 
   useLayoutEffect(() => {
     if (scrollRef.current) {
