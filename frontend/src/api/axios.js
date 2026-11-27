@@ -19,6 +19,7 @@ api.interceptors.request.use(
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      config.__sessionToken = token;
     }
     return config;
   },
@@ -32,8 +33,19 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+      const requestUrl = String(error.config?.url || '');
+      const isSignInRequest = /(?:^|\/)auth\/(?:login|google|register|forgot-password|reset-password)(?:\/|$)/i.test(requestUrl);
+      const requestToken = error.config?.__sessionToken;
+      const currentToken = localStorage.getItem('token');
+
+      // Ignore stale responses from a previous session. In particular, a
+      // pending /auth/me request must not erase a token created by a new login.
+      if (!isSignInRequest && requestToken && requestToken === currentToken) {
+        localStorage.removeItem('token');
+        if (window.location.pathname !== '/login') {
+          window.location.replace('/login');
+        }
+      }
     }
     
     // Handle school inactive errors globally

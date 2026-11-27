@@ -38,6 +38,13 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 1.4;
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+
+.ses-toast-container .Toastify__toast-body.ses-toast__body > div {
+  color: #111827 !important;
+  opacity: 1 !important;
 }
 
 .ses-toast-container .Toastify__close-button {
@@ -61,6 +68,11 @@
   background: #111827;
   color: #f8fafc;
   box-shadow: 0 10px 28px rgb(0 0 0 / 30%);
+}
+
+.ses-toast-container--dark .Toastify__toast-body.ses-toast__body,
+.ses-toast-container--dark .Toastify__toast-body.ses-toast__body > div {
+  color: #f8fafc !important;
 }
 
 .ses-toast-container--dark .Toastify__close-button {

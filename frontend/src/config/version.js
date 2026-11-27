@@ -1,6 +1,6 @@
 // SES Educare Web Platform Version
 // Auto-synced across all panels and navigation bars
-export const APP_VERSION = '2.0.110';
+export const APP_VERSION = '2.0.111';
 export const APP_NAME = 'SES Educare';
 export const APP_FULL_TITLE = 'SES Educare';
 export const APP_RELEASE_DATE = 'Nov 2026';

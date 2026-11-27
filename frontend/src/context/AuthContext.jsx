@@ -26,13 +26,22 @@ export const AuthProvider = ({ children }) => {
       try {
         const response = await api.get('/auth/me');
         const user = response.data.user;
-        if (user && user.studentDetails) {
-          user.studentProfile = user.studentDetails;
-          delete user.studentDetails;
+        // A login may replace this token while the initial session check is
+        // still in flight. Never let an older response overwrite that session.
+        if (localStorage.getItem('token') === token) {
+          if (user && user.studentDetails) {
+            user.studentProfile = user.studentDetails;
+            delete user.studentDetails;
+          }
+          setUser(user);
         }
-        setUser(user);
       } catch (error) {
-        localStorage.removeItem('token');
+        // Only clear the token this request actually checked. A newer login
+        // may already have stored a different token.
+        if (localStorage.getItem('token') === token) {
+          localStorage.removeItem('token');
+          setUser(null);
+        }
       }
     }
     setLoading(false);
