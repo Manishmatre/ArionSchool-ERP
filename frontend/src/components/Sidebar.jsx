@@ -10,7 +10,7 @@ import {
   FiSettings, FiLayers, FiFileText, FiGlobe, FiVideo,
   FiCreditCard, FiTrendingUp, FiStar, FiSmartphone, FiBox, FiDollarSign,
   FiShield, FiTruck, FiMessageSquare, FiUploadCloud, FiAlertTriangle, FiPieChart,
-  FiClock, FiGrid, FiEdit3, FiDroplet
+  FiClock, FiGrid, FiEdit3, FiDroplet, FiPrinter
 } from 'react-icons/fi';
 
 let persistedScrollTop = 0;
@@ -825,3 +825,4 @@ const Sidebar = ({ role, user, isOpen = true, toggleSidebar = () => { } }) => {
 };
 
 export default Sidebar;
+
