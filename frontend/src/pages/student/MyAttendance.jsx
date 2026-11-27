@@ -68,7 +68,7 @@ const MyAttendance = () => {
                 Center Attendance Punch Policy
               </h4>
               <p className="text-xs text-slate-600 mt-0.5 max-w-2xl leading-relaxed">
-                Attendance cannot be marked from web browsers. To mark your daily attendance, scan the official Study Center QR Code at your school study center using the <strong>SES Educare Mobile App</strong>.
+                Attendance cannot be marked from web browsers. To mark your daily attendance, scan the official Study Center QR Code at your school study center using the <strong>Arion School Mobile App</strong>.
               </p>
             </div>
           </div>
@@ -132,3 +132,4 @@ const MyAttendance = () => {
 };
 
 export default MyAttendance;
+

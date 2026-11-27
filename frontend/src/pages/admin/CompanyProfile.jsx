@@ -414,7 +414,7 @@ export default function CompanyProfile({ embedded = false }) {
           </div>
           <div className="min-w-0">
             <p className="text-xs font-medium text-slate-500">Entity name</p>
-            <p className="text-sm font-semibold text-slate-900 truncate">{formData.name || 'SES Educare'}</p>
+            <p className="text-sm font-semibold text-slate-900 truncate">{formData.name || 'Arion School'}</p>
           </div>
         </div>
 
@@ -488,7 +488,7 @@ export default function CompanyProfile({ embedded = false }) {
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   required
                   className="w-full px-3.5 py-2 bg-slate-50/70 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white"
-                  placeholder="e.g. SES Educare"
+                  placeholder="e.g. Arion School"
                 />
               </div>
 
@@ -891,3 +891,4 @@ export default function CompanyProfile({ embedded = false }) {
 
   return <Layout>{content}</Layout>;
 }
+

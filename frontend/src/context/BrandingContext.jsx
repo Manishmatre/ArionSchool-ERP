@@ -183,14 +183,14 @@ export const BrandingProvider = ({ children }) => {
         setBranding(merged);
         applyVisualTheme(merged.visual);
 
-        const schoolTitle = merged.identity?.schoolName || 'SES Educare';
+        const schoolTitle = merged.identity?.schoolName || 'Arion School';
         document.title = `${schoolTitle} — School Management ERP`;
       }
     } catch (err) {
-      console.warn('Could not load remote branding, using SES Educare defaults:', err.message);
+      console.warn('Could not load remote branding, using Arion School defaults:', err.message);
       setBranding(SES_DEFAULT_BRANDING);
       applyVisualTheme(SES_DEFAULT_BRANDING.visual);
-      document.title = 'SES Educare — School Management ERP';
+      document.title = 'Arion School — School Management ERP';
     } finally {
       setLoading(false);
     }
@@ -217,7 +217,7 @@ export const BrandingProvider = ({ children }) => {
       };
       setBranding(merged);
       applyVisualTheme(merged.visual);
-      const schoolTitle = merged.identity?.schoolName || 'SES Educare';
+      const schoolTitle = merged.identity?.schoolName || 'Arion School';
       document.title = `${schoolTitle} — School Management ERP`;
     }
     return res.data;
@@ -246,7 +246,7 @@ export const BrandingProvider = ({ children }) => {
     previewVisualTheme,
     saveBranding,
     resetToDefault,
-    schoolName: branding.identity?.schoolName || 'SES Educare',
+    schoolName: branding.identity?.schoolName || 'Arion School',
     shortName: branding.identity?.shortName || 'SES',
     logoUrl: branding.visual?.logoUrl || '',
     showPlatformAttribution: branding.login?.showPlatformAttribution !== false
@@ -270,7 +270,7 @@ export const useBranding = () => {
       isLightHeader: false,
       isDarkCanvas: false,
       previewVisualTheme: () => {},
-      schoolName: 'SES Educare',
+      schoolName: 'Arion School',
       shortName: 'SES',
       logoUrl: '',
       showPlatformAttribution: true
@@ -280,3 +280,4 @@ export const useBranding = () => {
 };
 
 export default BrandingContext;
+

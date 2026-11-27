@@ -63,7 +63,7 @@ const CertificateVerificationPage = () => {
               Certificate Verification
             </h1>
             <p className="text-lg text-slate-600">
-              Verify the authenticity of student and school certificates issued by SES Educare.
+              Verify the authenticity of student and school certificates issued by Arion School.
             </p>
           </div>
 
@@ -225,3 +225,4 @@ const DetailRow = ({ label, value }) => (
 );
 
 export default CertificateVerificationPage;
+

@@ -77,7 +77,7 @@ async function seed() {
       {
         singletonKey: 'GLOBAL_PLATFORM_CONFIG',
         companyName: 'STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED',
-        productName: 'SES Educare',
+        productName: 'Arion School',
         primaryDomain: 'seseducare.com',
         appDomain: 'myapp.seseducare.com',
         adminConsoleDomain: 'admin.seseducare.com',
@@ -579,7 +579,7 @@ async function seed() {
     const broadcastExists = await Notification.findOne({ isPlatformGlobal: true });
     if (!broadcastExists) {
       await Notification.create({
-        title: 'Welcome to SES Educare ERP',
+        title: 'Welcome to Arion School ERP',
         message: 'Multi-tenant cloud infrastructure, Razorpay Fee Desk, CBSE CCE Report Cards, and Teacher AI Copilot are now live across all campuses.',
         type: 'announcement',
         recipients: 'all',
@@ -615,3 +615,4 @@ async function seed() {
 }
 
 seed();
+

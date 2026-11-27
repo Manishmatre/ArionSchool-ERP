@@ -626,7 +626,7 @@ const StudentDetails = () => {
           </nav>
         </div>
 
-        {/* SES Educare 2-Column Split Layout */}
+        {/* Arion School 2-Column Split Layout */}
         <div className="flex flex-col lg:flex-row items-start gap-6">
           {/* Left Sticky Profile Card - Fixed while right area scrolls */}
           <div className="w-full lg:w-80 bg-white rounded-2xl border border-slate-200/90 shadow-2xs p-6 shrink-0 flex flex-col items-center lg:sticky lg:top-4 self-start">
@@ -1607,3 +1607,4 @@ const StudentDetails = () => {
 };
 
 export default StudentDetails;
+

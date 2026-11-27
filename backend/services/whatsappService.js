@@ -56,7 +56,7 @@ class WhatsAppService {
     }).populate('schoolClass', 'name').populate('section', 'name');
 
     if (!student) {
-      return `Welcome to SES Educare School Assistant. We could not find a registered student linked to phone number ${cleanPhone}. Please contact the school admissions office for assistance.`;
+      return `Welcome to Arion School School Assistant. We could not find a registered student linked to phone number ${cleanPhone}. Please contact the school admissions office for assistance.`;
     }
 
     const studentName = `${student.personalInfo?.firstName || ''} ${student.personalInfo?.lastName || ''}`.trim();
@@ -73,7 +73,7 @@ class WhatsAppService {
       if (totalDue === 0) {
         return `Hello! All school fees for ${studentName} (${className}) are completely paid up to date. Thank you!`;
       }
-      return `Fee Status for ${studentName} (${className}):\nTotal Pending Due: ₹${totalDue.toLocaleString()}\nPending components: ${obligations.map(o => o.component).join(', ')}.\nYou can pay securely online via the SES Educare Parent Portal: https://parents.seseducare.com/pay/${student._id}`;
+      return `Fee Status for ${studentName} (${className}):\nTotal Pending Due: ₹${totalDue.toLocaleString()}\nPending components: ${obligations.map(o => o.component).join(', ')}.\nYou can pay securely online via the Arion School Parent Portal: https://parents.seseducare.com/pay/${student._id}`;
     }
 
     // 2. Attendance Inquiry
@@ -126,8 +126,9 @@ class WhatsAppService {
     }
 
     // Default Interactive Menu
-    return `Welcome to SES Educare School Bot for ${studentName} (${className})!\nReply with a keyword or number:\n1️⃣ *Fees* - Check outstanding fees & payment link\n2️⃣ *Attendance* - Today's punch & monthly attendance %\n3️⃣ *Homework* - Today's homework assignments\n4️⃣ *Help* - Connect with School Helpdesk`;
+    return `Welcome to Arion School School Bot for ${studentName} (${className})!\nReply with a keyword or number:\n1️⃣ *Fees* - Check outstanding fees & payment link\n2️⃣ *Attendance* - Today's punch & monthly attendance %\n3️⃣ *Homework* - Today's homework assignments\n4️⃣ *Help* - Connect with School Helpdesk`;
   }
 }
 
 module.exports = new WhatsAppService();
+

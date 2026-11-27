@@ -66,7 +66,7 @@ const Register = () => {
             <FiAward className="text-4xl" />
           </span>
           <h1 className="text-2xl font-bold text-slate-900 mb-2">Create Account</h1>
-          <p className="text-slate-500">Join SES Educare Portal</p>
+          <p className="text-slate-500">Join Arion School Portal</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -106,3 +106,4 @@ const Register = () => {
 };
 
 export default Register;
+

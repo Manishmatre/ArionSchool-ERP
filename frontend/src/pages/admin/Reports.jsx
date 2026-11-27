@@ -329,7 +329,7 @@ const Reports = () => {
       const exportedAt = new Date().toISOString();
       const bundle = {
         schemaVersion: 1,
-        source: 'SES Educare Reports',
+        source: 'Arion School Reports',
         exportedAt,
         reports: successful.map(({ report, data }) => ({
           id: reportKey(report.categoryId, report.id),
@@ -399,7 +399,7 @@ const Reports = () => {
     if (!importedSnapshot) return;
     const stamp = new Date().toISOString().slice(0, 10);
     if (format === 'json') {
-      downloadFile(JSON.stringify({ schemaVersion: 1, source: 'SES Educare imported snapshot', ...importedSnapshot }, null, 2), 'application/json;charset=utf-8', `ses-imported-report-${stamp}.json`);
+      downloadFile(JSON.stringify({ schemaVersion: 1, source: 'Arion School imported snapshot', ...importedSnapshot }, null, 2), 'application/json;charset=utf-8', `ses-imported-report-${stamp}.json`);
       return;
     }
     if (!importedRows.length) {
@@ -619,3 +619,4 @@ const Reports = () => {
 };
 
 export default Reports;
+

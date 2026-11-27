@@ -16,11 +16,11 @@ const schoolBrandingSchema = new mongoose.Schema({
     schoolName: {
       type: String,
       required: true,
-      default: 'SES Educare'
+      default: 'Arion School'
     },
     shortName: {
       type: String,
-      default: 'SES'
+      default: 'Arion'
     },
     motto: {
       type: String,
@@ -28,7 +28,7 @@ const schoolBrandingSchema = new mongoose.Schema({
     },
     description: {
       type: String,
-      default: 'Modern school management and education ERP platform by SES Educare.'
+      default: 'Modern school management and education ERP platform by Arion School.'
     },
     affiliationBoard: {
       type: String,
@@ -105,7 +105,7 @@ const schoolBrandingSchema = new mongoose.Schema({
   login: {
     welcomeTitle: {
       type: String,
-      default: 'Welcome to SES Educare ERP'
+      default: 'Welcome to Arion School ERP'
     },
     welcomeSubtitle: {
       type: String,
@@ -154,11 +154,11 @@ const schoolBrandingSchema = new mongoose.Schema({
   email: {
     senderName: {
       type: String,
-      default: 'SES Educare'
+      default: 'Arion School'
     },
     footerText: {
       type: String,
-      default: 'This is an automated notification from SES Educare School Management ERP.'
+      default: 'This is an automated notification from Arion School School Management ERP.'
     }
   },
   document: {
@@ -180,3 +180,4 @@ schoolBrandingSchema.index({ 'whiteLabel.subdomain': 1 });
 schoolBrandingSchema.index({ 'whiteLabel.customDomain': 1 });
 
 module.exports = mongoose.model('SchoolBranding', schoolBrandingSchema);
+

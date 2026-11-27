@@ -332,7 +332,7 @@ app.get(['/api/download/info', '/download/info'], (req, res) => {
   const ipaName = latestIpa ? path.basename(latestIpa) : `SES-Educare-v${ver}.ipa`;
   return res.json({
     success: true,
-    appName: 'SES Educare',
+    appName: 'Arion School',
     version: ver,
     android: {
       available: Boolean(latestApk),
@@ -356,7 +356,7 @@ app.get(['/api/download/info', '/download/info'], (req, res) => {
 app.get(['/api', '/api/', '/api/health', '/api/status'], (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'SES Educare School Management ERP API is live and operational',
+    message: 'Arion School School Management ERP API is live and operational',
     status: 'online',
     version: BACKEND_VERSION,
     timestamp: new Date().toISOString()
@@ -505,3 +505,4 @@ const gracefulShutdown = (signal) => {
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+

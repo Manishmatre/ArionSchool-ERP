@@ -24,7 +24,7 @@ const homePageContent = [
     content: {
       badge: "India's Trusted Education Network",
       heading: "Empowering Careers and Entrepreneurs",
-      subheading: "Join our growing network of 15,000+ students. Learn industry-relevant skills, get certified, and transform your career with SES Educare.",
+      subheading: "Join our growing network of 15,000+ students. Learn industry-relevant skills, get certified, and transform your career with Arion School.",
       backgroundImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1920&q=80",
       buttons: [
         {
@@ -175,14 +175,14 @@ const homePageContent = [
         name: "Priya Sharma",
         role: "Student - Tally Course",
         image: "👩‍🎓",
-        text: "SES Educare helped me land my dream job as an accountant. The practical training was excellent!",
+        text: "Arion School helped me land my dream job as an accountant. The practical training was excellent!",
         rating: 5
       },
       {
         name: "Rajesh Kumar",
         role: "Franchise Owner - Mumbai",
         image: "👨‍💼",
-        text: "Starting a franchise with SES Educare was the best business decision. Great ROI and support!",
+        text: "Starting a franchise with Arion School was the best business decision. Great ROI and support!",
         rating: 5
       },
       {
@@ -206,7 +206,7 @@ const aboutPageContent = [
     isActive: true,
     title: 'About Hero Section',
     content: {
-      heading: "About SES Educare",
+      heading: "About Arion School",
       tagline: "Empowering Education, Enriching Lives"
     }
   },
@@ -218,10 +218,10 @@ const aboutPageContent = [
     isActive: true,
     title: 'Our Story',
     content: `
-      <p>SES Educare was founded with a vision to make quality education accessible to everyone. Since our inception, we have been committed to providing industry-relevant training that empowers students to achieve their career goals.</p>
+      <p>Arion School was founded with a vision to make quality education accessible to everyone. Since our inception, we have been committed to providing industry-relevant training that empowers students to achieve their career goals.</p>
       <p>Over the years, we have grown from a single training center to a network of 100+ centers across India, serving thousands of students annually. Our success is built on our dedication to excellence, practical training methodology, and student-centric approach.</p>
       <p>We offer a wide range of courses in computer education, accounting, digital marketing, and professional skills. Our curriculum is designed by industry experts and updated regularly to match current market demands.</p>
-      <p>Today, SES Educare stands as one of India's most trusted education networks, with a proven track record of student success and franchise partner satisfaction.</p>
+      <p>Today, Arion School stands as one of India's most trusted education networks, with a proven track record of student success and franchise partner satisfaction.</p>
     `
   },
   {
@@ -386,3 +386,4 @@ const seedDatabase = async () => {
 
 // Run seeder
 seedDatabase();
+

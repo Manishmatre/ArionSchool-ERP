@@ -433,8 +433,8 @@ exports.renderDefaultIdCardCanvas = async function(student, customFieldValues = 
   const session = customFieldValues.session || (student.batch?.name || student.enrolledCourses?.[0]?.batch?.name || '2026 - 2027');
 
   const studyCenter = isFranchise
-    ? (franchiseName || 'SES Educare Study Center')
-    : (companyInfo?.name || 'SES Educare Central Campus');
+    ? (franchiseName || 'Arion School Study Center')
+    : (companyInfo?.name || 'Arion School Central Campus');
 
   let rawAddress = '';
   if (typeof student.contactInfo?.address === 'string') {
@@ -2059,3 +2059,4 @@ async function renderMainBranchMarksheet(data, companyInfo, background, { isFran
   // The reference image carries the official header, watermark, footer badges and signatures.
   return canvas.toBuffer('image/png');
 }
+

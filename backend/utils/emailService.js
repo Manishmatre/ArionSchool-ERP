@@ -28,7 +28,7 @@ exports.sendStudentWelcomeCredentialsEmail = async ({ name, email, password }) =
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #2563eb;">Welcome to SES Educare!</h2>
+      <h2 style="color: #2563eb;">Welcome to Arion School!</h2>
       <p>Dear ${name},</p>
       <p>Your student account has been created successfully.</p>
       <p><strong>Website:</strong> <a href="${process.env.FRONTEND_URL}">${process.env.FRONTEND_URL}</a></p>
@@ -42,13 +42,13 @@ exports.sendStudentWelcomeCredentialsEmail = async ({ name, email, password }) =
         Login
       </a>
       <p>For security, please change your password after your first login.</p>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email,
-    subject: 'Welcome to SES Educare - Your Login Credentials',
+    subject: 'Welcome to Arion School - Your Login Credentials',
     html
   });
 };
@@ -60,7 +60,7 @@ exports.sendFranchiseWelcomeCredentialsEmail = async ({ name, email, password, f
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
       <div style="background-color: #2563eb; padding: 20px; text-align: center;">
-        <h1 style="color: white; margin: 0;">SES Educare</h1>
+        <h1 style="color: white; margin: 0;">Arion School</h1>
       </div>
       <div style="padding: 30px; line-height: 1.6; color: #374151;">
         <h2 style="color: #1e40af; margin-top: 0;">Welcome to our Network!</h2>
@@ -90,14 +90,14 @@ exports.sendFranchiseWelcomeCredentialsEmail = async ({ name, email, password, f
         </p>
         <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
         <p style="margin-bottom: 0;">Best regards,</p>
-        <p style="margin-top: 5px; font-weight: bold; color: #1e40af;">SES Educare Team</p>
+        <p style="margin-top: 5px; font-weight: bold; color: #1e40af;">Arion School Team</p>
       </div>
     </div>
   `;
 
   await exports.sendEmail({
     email,
-    subject: `Welcome to SES Educare - Franchise Credentials for ${franchiseName}`,
+    subject: `Welcome to Arion School - Franchise Credentials for ${franchiseName}`,
     html
   });
 };
@@ -109,7 +109,7 @@ exports.sendStaffWelcomeCredentialsEmail = async ({ name, email, password, desig
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
       <div style="background-color: #059669; padding: 20px; text-align: center;">
-        <h1 style="color: white; margin: 0;">SES Educare</h1>
+        <h1 style="color: white; margin: 0;">Arion School</h1>
       </div>
       <div style="padding: 30px; line-height: 1.6; color: #374151;">
         <h2 style="color: #065f46; margin-top: 0;">Welcome to the Team!</h2>
@@ -134,14 +134,14 @@ exports.sendStaffWelcomeCredentialsEmail = async ({ name, email, password, desig
         </p>
         <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 30px 0;" />
         <p style="margin-bottom: 0;">Best regards,</p>
-        <p style="margin-top: 5px; font-weight: bold; color: #065f46;">SES Educare HR Team</p>
+        <p style="margin-top: 5px; font-weight: bold; color: #065f46;">Arion School HR Team</p>
       </div>
     </div>
   `;
 
   await exports.sendEmail({
     email,
-    subject: 'Welcome to SES Educare - Staff Portal Credentials',
+    subject: 'Welcome to Arion School - Staff Portal Credentials',
     html
   });
 };
@@ -150,7 +150,7 @@ exports.sendStaffWelcomeCredentialsEmail = async ({ name, email, password, desig
 exports.sendEmail = async (options) => {
   const transporter = createTransporter();
 
-  const from = getEnv('SMTP_FROM') || `${getEnv('EMAIL_FROM') || 'SES Educare'} <${getEnv('SMTP_USER', 'EMAIL_USER')}>`;
+  const from = getEnv('SMTP_FROM') || `${getEnv('EMAIL_FROM') || 'Arion School'} <${getEnv('SMTP_USER', 'EMAIL_USER')}>`;
 
   const mailOptions = {
     from,
@@ -177,9 +177,9 @@ exports.sendEmail = async (options) => {
 exports.sendWelcomeEmail = async (user) => {
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #2563eb;">Welcome to SES Educare!</h2>
+      <h2 style="color: #2563eb;">Welcome to Arion School!</h2>
       <p>Dear ${user.name},</p>
-      <p>Thank you for joining SES Educare. We're excited to have you on board!</p>
+      <p>Thank you for joining Arion School. We're excited to have you on board!</p>
       <p>Your account has been successfully created with the following details:</p>
       <ul>
         <li><strong>Email:</strong> ${user.email}</li>
@@ -191,13 +191,13 @@ exports.sendWelcomeEmail = async (user) => {
         Login to Dashboard
       </a>
       <p>If you have any questions, feel free to contact our support team.</p>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email: user.email,
-    subject: 'Welcome to SES Educare',
+    subject: 'Welcome to Arion School',
     html
   });
 };
@@ -217,7 +217,7 @@ exports.sendPasswordResetEmail = async (user, resetToken) => {
       </a>
       <p>This link will expire in 30 minutes.</p>
       <p>If you didn't request this, please ignore this email.</p>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
@@ -247,13 +247,13 @@ exports.sendCertificateEmail = async (student, certificate) => {
          style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
         View Certificate
       </a>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email: student.contactInfo.email,
-    subject: 'Certificate Issued - SES Educare',
+    subject: 'Certificate Issued - Arion School',
     html,
     attachments: certificate.pdfPath ? [{
       filename: `certificate_${certificate.certificateNumber}.pdf`,
@@ -281,7 +281,7 @@ exports.sendPaymentReceiptEmail = async (student, payment) => {
          style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
         View Payment History
       </a>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
@@ -313,13 +313,13 @@ exports.sendExamResultEmail = async (student, examResult) => {
          style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
         View Detailed Results
       </a>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email: student.contactInfo.email,
-    subject: 'Exam Results - SES Educare',
+    subject: 'Exam Results - Arion School',
     html
   });
 };
@@ -336,18 +336,18 @@ exports.sendAdmissionConfirmationEmail = async (student, course) => {
         <li><strong>Student ID:</strong> ${student.studentId}</li>
         <li><strong>Admission Date:</strong> ${new Date(student.admissionDate).toLocaleDateString('en-IN')}</li>
       </ul>
-      <p>Welcome to SES Educare! We look forward to helping you achieve your educational goals.</p>
+      <p>Welcome to Arion School! We look forward to helping you achieve your educational goals.</p>
       <a href="${process.env.FRONTEND_URL}/student/dashboard" 
          style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
         Go to Dashboard
       </a>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email: student.contactInfo.email,
-    subject: 'Admission Confirmed - SES Educare',
+    subject: 'Admission Confirmed - Arion School',
     html
   });
 };
@@ -373,15 +373,16 @@ exports.sendFranchiseApprovalEmail = async (franchise, admin) => {
          style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
         Login to Dashboard
       </a>
-      <p>Best regards,<br>SES Educare Team</p>
+      <p>Best regards,<br>Arion School Team</p>
     </div>
   `;
 
   await exports.sendEmail({
     email: franchise.owner.email,
-    subject: 'Franchise Approved - SES Educare',
+    subject: 'Franchise Approved - Arion School',
     html
   });
 };
 
 module.exports = exports;
+

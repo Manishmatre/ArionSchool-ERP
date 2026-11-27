@@ -188,7 +188,7 @@ async function getSchoolOperationalStats(franchiseId) {
 /**
  * 1. AI Assistant Chat
  */
-async function chatAssistant({ user, franchiseId, conversationId, message, schoolName = 'SES Educare' }) {
+async function chatAssistant({ user, franchiseId, conversationId, message, schoolName = 'Arion School' }) {
   let conversation = null;
   if (conversationId) {
     conversation = await AiConversation.findOne({ _id: conversationId, user: user._id });
@@ -207,7 +207,7 @@ async function chatAssistant({ user, franchiseId, conversationId, message, schoo
   // Fetch school stats for role-appropriate context
   const stats = await getSchoolOperationalStats(franchiseId || user.franchise);
 
-  const systemPrompt = `You are SES Educare Copilot, an expert AI educational assistant for ${schoolName}.
+  const systemPrompt = `You are Arion School Copilot, an expert AI educational assistant for ${schoolName}.
 Role of logged-in user: ${user.role} (${user.name || 'User'}).
 School ID: ${franchiseId || 'Global'}.
 
@@ -278,7 +278,7 @@ GUIDELINES:
 /**
  * 2. Dashboard AI Insights
  */
-async function generateDashboardInsights({ user, franchiseId, schoolName = 'SES Educare' }) {
+async function generateDashboardInsights({ user, franchiseId, schoolName = 'Arion School' }) {
   const stats = await getSchoolOperationalStats(franchiseId);
 
   const prompt = `As a School Operations Analyst, produce a concise, executive intelligence brief for ${schoolName}.
@@ -604,7 +604,7 @@ async function generateCommunicationDraft({
   audience = 'Parents & Guardians',
   language = 'English', // 'English' | 'Hindi' | 'Bilingual'
   keyPoints = '',
-  schoolName = 'SES Educare'
+  schoolName = 'Arion School'
 }) {
   const prompt = `Draft an official school communication:
 - Communication Type: ${type.toUpperCase()}
@@ -668,3 +668,4 @@ module.exports = {
   generateQuestions,
   generateCommunicationDraft
 };
+

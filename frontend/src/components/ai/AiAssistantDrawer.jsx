@@ -22,7 +22,7 @@ export default function AiAssistantDrawer() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hello! I am **SES Copilot**, your school AI assistant for **${schoolName || 'SES Educare'}**. How can I help you today with attendance, fee insights, or academic operations?`
+      content: `Hello! I am **SES Copilot**, your school AI assistant for **${schoolName || 'Arion School'}**. How can I help you today with attendance, fee insights, or academic operations?`
     }
   ]);
   const [input, setInput] = useState('');
@@ -54,7 +54,7 @@ export default function AiAssistantDrawer() {
       const response = await aiAssistantChat({
         message: text,
         conversationId,
-        schoolName: schoolName || branding?.schoolName || 'SES Educare'
+        schoolName: schoolName || branding?.schoolName || 'Arion School'
       });
 
       if (response.data?.success) {
@@ -146,7 +146,7 @@ export default function AiAssistantDrawer() {
                     </span>
                   </h3>
                   <p className="text-[11px] text-slate-500 truncate max-w-[220px]">
-                    {schoolName || 'SES Educare Management ERP'}
+                    {schoolName || 'Arion School Management ERP'}
                   </p>
                 </div>
               </div>
@@ -270,3 +270,4 @@ export default function AiAssistantDrawer() {
     </>
   );
 }
+

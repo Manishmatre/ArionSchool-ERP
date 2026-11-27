@@ -106,7 +106,7 @@ const SimpleLayout = ({ children }) => {
           <div className="mt-8 border-t border-slate-200 pt-8 text-center">
             <p className="text-base text-slate-400">
               &copy; {new Date().getFullYear()} {schoolName}
-              {showPlatformAttribution && ' • SES Educare by STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED'}. All rights reserved.
+              {showPlatformAttribution && ' • Arion School by STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED'}. All rights reserved.
             </p>
           </div>
         </div>
@@ -116,3 +116,4 @@ const SimpleLayout = ({ children }) => {
 };
 
 export default SimpleLayout;
+

@@ -59,7 +59,7 @@ const RegisterSuperAdmin = () => {
             <FiShield className="text-xl text-indigo-600 absolute -top-1 -right-1" />
           </span>
           <h1 className="text-2xl font-bold text-slate-900 mb-2">Super Admin Registration</h1>
-          <p className="text-slate-500">SES Educare Platform — initial setup only</p>
+          <p className="text-slate-500">Arion School Platform — initial setup only</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -98,3 +98,4 @@ const RegisterSuperAdmin = () => {
 };
 
 export default RegisterSuperAdmin;
+

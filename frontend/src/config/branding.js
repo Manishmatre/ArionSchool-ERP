@@ -1,13 +1,13 @@
 /**
- * SES Educare - Centralized School ERP Branding
+ * Arion School - Centralized School ERP Branding
  * Organization: STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED
- * Product: SES Educare School Management ERP
+ * Product: Arion School School Management ERP
  */
 
 export const SES_DEFAULT_BRANDING = {
   identity: {
-    schoolName: 'SES Educare',
-    shortName: 'SES',
+    schoolName: 'Arion School',
+    shortName: 'Arion',
     motto: 'One Platform. Complete School Management.',
     description: 'School management platform for students, families, staff and school leaders.',
     affiliationBoard: 'CBSE',
@@ -39,7 +39,7 @@ export const SES_DEFAULT_BRANDING = {
     themeMode: 'brand-chrome'
   },
   login: {
-    welcomeTitle: 'Welcome to SES Educare',
+    welcomeTitle: 'Welcome to Arion School',
     welcomeSubtitle: 'Unified School Management ERP Platform',
     bannerImageUrl: '',
     bgImageUrl: '',
@@ -52,11 +52,12 @@ export const SES_DEFAULT_BRANDING = {
     status: 'active'
   },
   attribution: {
-    productName: 'SES Educare',
+    productName: 'Arion School',
     developerCompany: 'STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED',
-    poweredByText: 'Powered by SES Educare',
-    copyright: `© ${new Date().getFullYear()} SES Educare. All rights reserved.`
+    poweredByText: 'Powered by Arion School',
+    copyright: `© ${new Date().getFullYear()} Arion School. All rights reserved.`
   }
 };
 
 export default SES_DEFAULT_BRANDING;
+

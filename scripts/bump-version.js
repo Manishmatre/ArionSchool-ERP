@@ -1,5 +1,5 @@
 /**
- * SES Educare Unified Version Management Tool
+ * Arion School Unified Version Management Tool
  * Usage:
  *   node scripts/bump-version.js [web|mobile|all] [patch|minor|major]
  *   node scripts/bump-version.js --set-web=2.0.6 --set-mobile=1.0.5
@@ -84,11 +84,11 @@ if (setMobArg) {
 // Apply Web Updates
 if (newWebVersion !== currentWebVersion || setWebArg || target === 'web' || target === 'all') {
   // Update frontend/src/config/version.js
-  const feVerContent = `// SES Educare Web Platform Version
+  const feVerContent = `// Arion School Web Platform Version
 // Auto-synced across all panels and navigation bars
 export const APP_VERSION = '${newWebVersion}';
-export const APP_NAME = 'SES Educare';
-export const APP_FULL_TITLE = 'SES Educare';
+export const APP_NAME = 'Arion School';
+export const APP_FULL_TITLE = 'Arion School';
 export const APP_RELEASE_DATE = '${new Date().toLocaleString('en-US', { month: 'short', year: 'numeric' })}';
 
 export default {
@@ -234,3 +234,4 @@ export default {
 
   console.log(`✅ Mobile Application Version synced to: v${newMobVersion} (build ${newMobBuild})`);
 }
+

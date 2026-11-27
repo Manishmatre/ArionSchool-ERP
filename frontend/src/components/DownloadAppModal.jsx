@@ -18,7 +18,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
     versionCode: CURRENT_APP_BUILD,
     fileSize: '39.8 MB',
     apkUrl: `/SES-Educare-v${CURRENT_APP_VERSION}.apk`,
-    releaseNotes: `SES Educare Android app version ${CURRENT_APP_VERSION}.`
+    releaseNotes: `Arion School Android app version ${CURRENT_APP_VERSION}.`
   });
 
   const [latestIos, setLatestIos] = useState({
@@ -27,7 +27,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
     fileSize: '4.8 MB',
     apkUrl: `/SES-Educare-v${CURRENT_APP_VERSION}.ipa`,
     iosUrl: 'https://testflight.apple.com/join/seseducare',
-    releaseNotes: `SES Educare iOS app version ${CURRENT_APP_VERSION}.`
+    releaseNotes: `Arion School iOS app version ${CURRENT_APP_VERSION}.`
   });
 
   useEffect(() => {
@@ -139,7 +139,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
               <FiSmartphone className="text-2xl" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white">Download SES Educare App</h3>
+              <h3 className="text-lg font-bold text-white">Download Arion School App</h3>
               <p className="text-xs text-primary-100">Live mobile platform for Students, Parents & School Staff</p>
             </div>
           </div>
@@ -191,7 +191,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
                     Latest Release v{latestAndroid.versionName} (Build #{latestAndroid.versionCode || 1})
                   </div>
-                  <h4 className="text-sm font-bold text-slate-800">SES Educare for Android</h4>
+                  <h4 className="text-sm font-bold text-slate-800">Arion School for Android</h4>
                   <p className="text-xs text-slate-600">
                     Compatible with all Android devices (Samsung, Redmi, OnePlus, Vivo, Oppo, Realme, etc.)
                   </p>
@@ -272,7 +272,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
                     <FaApple className="text-blue-700" />
                     iOS Release v{latestIos.versionName} (Build #{latestIos.versionCode || 1})
                   </div>
-                  <h4 className="text-sm font-bold text-slate-800">SES Educare for iPhone & iPad</h4>
+                  <h4 className="text-sm font-bold text-slate-800">Arion School for iPhone & iPad</h4>
                   <p className="text-xs text-slate-600">
                     Compatible with iPhone and iPad running iOS 14.0 or higher.
                   </p>
@@ -383,7 +383,7 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
 
         {/* Footer */}
         <div className="bg-slate-50 px-5 py-3 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
-          <span>SES Educare Mobile Suite</span>
+          <span>Arion School Mobile Suite</span>
           <button
             type="button"
             onClick={onClose}
@@ -402,3 +402,4 @@ const DownloadAppModal = ({ isOpen, onClose, initialPlatform = 'android' }) => {
 };
 
 export default DownloadAppModal;
+

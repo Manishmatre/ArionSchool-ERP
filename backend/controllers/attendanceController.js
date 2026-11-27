@@ -542,7 +542,7 @@ exports.generateAttendanceQR = async (req, res, next) => {
     const qrPayload = {
       type: 'SES_ATTENDANCE_QR',
       franchiseId: franchise._id.toString(),
-      franchiseName: franchise.name || franchise.franchiseName || 'SES Educare Institute',
+      franchiseName: franchise.name || franchise.franchiseName || 'Arion School Institute',
       code: franchise.code || 'SES-CTR',
       city: franchise.address?.city || '',
       date: todayDate,
@@ -567,7 +567,7 @@ exports.generateAttendanceQR = async (req, res, next) => {
       qrType: 'all_time',
       validity: 'all_time',
       franchiseId: franchise._id.toString(),
-      franchiseName: franchise.name || franchise.franchiseName || 'SES Educare Institute',
+      franchiseName: franchise.name || franchise.franchiseName || 'Arion School Institute',
       code: franchise.code || 'SES-CTR',
       city: franchise.address?.city || '',
       session: 'daily',
@@ -626,7 +626,7 @@ exports.punchQRAttendance = async (req, res, next) => {
       } catch (e) {
         return res.status(400).json({
           success: false,
-          message: 'Invalid QR code. Please scan an official SES Educare Attendance QR.'
+          message: 'Invalid QR code. Please scan an official Arion School Attendance QR.'
         });
       }
     } else {
@@ -673,7 +673,7 @@ exports.punchQRAttendance = async (req, res, next) => {
     });
 
     const studentName = student.personalInfo?.name || req.user.name || 'Student';
-    const centerName = parsed.franchiseName || 'SES Educare Center';
+    const centerName = parsed.franchiseName || 'Arion School Center';
 
     if (existing && existing.status === 'present') {
       return res.status(200).json({
@@ -793,7 +793,7 @@ exports.getTodayAttendance = async (req, res, next) => {
       punched: isPresent,
       attendance: attendance || null,
       studentName: student.personalInfo?.name || req.user.name,
-      franchiseName: attendance?.franchise?.name || 'SES Educare Study Center',
+      franchiseName: attendance?.franchise?.name || 'Arion School Study Center',
       checkInTime: attendance?.checkInTime || attendance?.date || null
     });
   } catch (error) {
@@ -1092,3 +1092,4 @@ exports.saveSchoolDailyAttendance = async (req, res, next) => {
 };
 
 module.exports = exports;
+

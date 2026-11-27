@@ -638,7 +638,7 @@ const FranchiseTestimonials = () => {
               <textarea
                 rows={4}
                 required
-                placeholder="Describe how the SES Educare ERP, academic accreditation, and digital campus features have benefited your school..."
+                placeholder="Describe how the Arion School ERP, academic accreditation, and digital campus features have benefited your school..."
                 value={partnerForm.message}
                 onChange={(e) => setPartnerForm({ ...partnerForm, message: e.target.value })}
                 className="w-full text-sm px-3 py-2 border rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
@@ -927,3 +927,4 @@ const FranchiseTestimonials = () => {
 };
 
 export default FranchiseTestimonials;
+

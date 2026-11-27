@@ -325,7 +325,7 @@ const SchoolTransferCertificates = () => {
             {/* School Header */}
             <div className="text-center border-b pb-4 mb-6">
               <h2 className="text-2xl font-bold tracking-tight text-gray-900 uppercase">
-                {branding?.schoolName || schoolName || 'SES Educare'}
+                {branding?.schoolName || schoolName || 'Arion School'}
               </h2>
               <p className="text-xs text-gray-500 tracking-wider">
                 {branding?.affiliation || 'Affiliated to CBSE / State Board of Education'}
@@ -410,3 +410,4 @@ const SchoolTransferCertificates = () => {
 };
 
 export default SchoolTransferCertificates;
+

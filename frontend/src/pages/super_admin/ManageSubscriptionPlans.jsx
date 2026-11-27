@@ -173,7 +173,7 @@ export default function ManageSubscriptionPlans() {
 
       <div className="mb-6">
         <p className="text-xs text-slate-500">
-          Configure tier pricing, student quotas, and feature flags available to member schools across SES Educare SaaS.
+          Configure tier pricing, student quotas, and feature flags available to member schools across Arion School SaaS.
         </p>
       </div>
 
@@ -454,3 +454,4 @@ export default function ManageSubscriptionPlans() {
     </Layout>
   );
 }
+

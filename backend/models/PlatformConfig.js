@@ -12,7 +12,7 @@ const platformConfigSchema = new mongoose.Schema({
   },
   productName: {
     type: String,
-    default: 'SES Educare'
+    default: 'Arion School'
   },
   primaryDomain: {
     type: String,
@@ -40,7 +40,7 @@ const platformConfigSchema = new mongoose.Schema({
   },
   maintenanceMessage: {
     type: String,
-    default: 'SES Educare School ERP is undergoing scheduled maintenance. Please check back soon.'
+    default: 'Arion School School ERP is undergoing scheduled maintenance. Please check back soon.'
   },
   defaultTrialDays: {
     type: Number,
@@ -68,3 +68,4 @@ const platformConfigSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('PlatformConfig', platformConfigSchema);
+

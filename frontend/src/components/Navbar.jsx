@@ -778,7 +778,7 @@ const Navbar = ({
                   >
                     <div className="flex items-center gap-2">
                       <FaAndroid className="text-emerald-600 text-xs" />
-                      <span>SES Educare for Android</span>
+                      <span>Arion School for Android</span>
                     </div>
                     <FiDownload className="text-slate-400 text-xs" />
                   </button>
@@ -790,7 +790,7 @@ const Navbar = ({
                   >
                     <div className="flex items-center gap-2">
                       <FaApple className="text-slate-800 text-xs" />
-                      <span>SES Educare for iOS</span>
+                      <span>Arion School for iOS</span>
                     </div>
                     <FiSmartphone className="text-slate-400 text-xs" />
                   </button>
@@ -826,3 +826,4 @@ const Navbar = ({
 };
 
 export default Navbar;
+

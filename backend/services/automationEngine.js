@@ -31,7 +31,7 @@ class AutomationEngine {
       const parentPhone = student.personalInfo?.fatherMobile || student.personalInfo?.motherMobile || student.personalInfo?.phone;
       if (parentPhone) {
         const studentName = `${student.personalInfo?.firstName || ''} ${student.personalInfo?.lastName || ''}`.trim();
-        const msg = `Dear Parent, this is an automated alert from SES Educare School. Your ward ${studentName} (${record.schoolClass?.name || 'Class'}) has been marked ABSENT today (${new Date().toLocaleDateString()}). Please contact the school office if this was unexpected.`;
+        const msg = `Dear Parent, this is an automated alert from Arion School School. Your ward ${studentName} (${record.schoolClass?.name || 'Class'}) has been marked ABSENT today (${new Date().toLocaleDateString()}). Please contact the school office if this was unexpected.`;
         await whatsappService.sendMessage(parentPhone, msg);
         alertedCount++;
       }
@@ -66,7 +66,7 @@ class AutomationEngine {
       const parentPhone = student.personalInfo?.fatherMobile || student.personalInfo?.phone;
       if (parentPhone) {
         const studentName = `${student.personalInfo?.firstName || ''} ${student.personalInfo?.lastName || ''}`.trim();
-        const msg = `Fee Reminder - SES Educare:\nDear Parent, kindly note that ${ob.component.toUpperCase()} fee of ₹${ob.amountPending} for ${studentName} is due. Please pay online to avoid late penalties: https://parents.seseducare.com/pay/${student._id}`;
+        const msg = `Fee Reminder - Arion School:\nDear Parent, kindly note that ${ob.component.toUpperCase()} fee of ₹${ob.amountPending} for ${studentName} is due. Please pay online to avoid late penalties: https://parents.seseducare.com/pay/${student._id}`;
         await whatsappService.sendMessage(parentPhone, msg);
         remindersSent++;
       }
@@ -101,7 +101,7 @@ class AutomationEngine {
       const phone = s.personalInfo?.phone || s.personalInfo?.fatherMobile;
       if (phone) {
         const name = `${s.personalInfo.firstName} ${s.personalInfo.lastName}`.trim();
-        const msg = `🎂 Happy Birthday ${name}! 🎉 The management, teachers, and staff of SES Educare wish you a fantastic year filled with learning, joy, and grand success!`;
+        const msg = `🎂 Happy Birthday ${name}! 🎉 The management, teachers, and staff of Arion School wish you a fantastic year filled with learning, joy, and grand success!`;
         await whatsappService.sendMessage(phone, msg);
         sent++;
       }
@@ -116,3 +116,4 @@ class AutomationEngine {
 }
 
 module.exports = new AutomationEngine();
+

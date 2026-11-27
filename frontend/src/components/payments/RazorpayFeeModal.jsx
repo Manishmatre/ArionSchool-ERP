@@ -68,7 +68,7 @@ export default function RazorpayFeeModal({
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency || 'INR',
-        name: schoolName || 'SES Educare',
+        name: schoolName || 'Arion School',
         description: `Fee Payment - ${obligation?.component || 'Installment'}`,
         order_id: orderData.orderId,
         image: branding?.logoUrl || undefined,
@@ -291,3 +291,4 @@ export default function RazorpayFeeModal({
     </div>
   );
 }
+

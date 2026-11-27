@@ -34,7 +34,7 @@ export default function LandingPage() {
   const [demoSubmitting, setDemoSubmitting] = useState(false);
   const [demoError, setDemoError] = useState('');
 
-  const schoolName = branding?.identity?.schoolName || 'SES Educare';
+  const schoolName = branding?.identity?.schoolName || 'Arion School';
   const companyName = branding?.attribution?.developerCompany || 'STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED';
 
   const handleDemoSubmit = async (e) => {
@@ -84,7 +84,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
           <div className="flex items-center gap-2">
             <span className="bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wide animate-pulse">
-              SES Educare School ERP
+              Arion School School ERP
             </span>
             <span>
               One connected platform for everyday school operations
@@ -522,7 +522,7 @@ export default function LandingPage() {
                   <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-700">
                     <div className="flex items-center gap-2 text-amber-400 font-bold">
                       <HiSparkles className="w-4 h-4" />
-                      <span>SES Educare Teacher Copilot • Lesson Planning</span>
+                      <span>Arion School Teacher Copilot • Lesson Planning</span>
                     </div>
                     <span className="text-slate-400 text-[11px]">Prompt: Class 10 Physics - Reflection of Light</span>
                   </div>
@@ -951,7 +951,7 @@ export default function LandingPage() {
                 a: 'Most schools transition within 24 to 48 hours. Our automated Excel / CSV importer quickly ingests student rosters, pending fee balances, and staff profiles with zero disruption.'
               },
               {
-                q: 'Does SES Educare support multiple school campuses?',
+                q: 'Does Arion School support multiple school campuses?',
                 a: 'Yes! Built on a modern multi-tenant architecture, school management groups can oversee all branches with centralized financial dashboards while each campus principal maintains independent daily control.'
               },
               {
@@ -1077,7 +1077,7 @@ export default function LandingPage() {
                 <span className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold block">System Status</span>
                 <span className="text-emerald-400 font-bold text-xs flex items-center gap-1.5 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-ping" />
-                  SES Educare School Management ERP
+                  Arion School School Management ERP
                 </span>
                 <span className="text-[10px] text-slate-400 block mt-1 font-mono">v{APP_VERSION} (Web Core)</span>
               </div>
@@ -1228,3 +1228,4 @@ export default function LandingPage() {
     </div>
   );
 }
+

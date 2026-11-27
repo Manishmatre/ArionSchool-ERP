@@ -21,7 +21,7 @@ const ASSET_DEFINITIONS = [
     description: 'Main brand logo displayed on headers of all official documents.',
     usedIn: ['Marksheets', 'Student Certificates', 'Student ID Cards', 'Franchise Certificates'],
     recommendedSize: '600 x 200 px (Transparent PNG)',
-    defaultNote: 'System uses built-in SES Educare primary logo.'
+    defaultNote: 'System uses built-in Arion School primary logo.'
   },
   {
     key: 'superAdminSignature',
@@ -313,3 +313,4 @@ exports.updateCompanyDetails = async (req, res, next) => {
     next(error);
   }
 };
+

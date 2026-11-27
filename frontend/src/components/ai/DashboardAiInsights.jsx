@@ -18,7 +18,7 @@ export default function DashboardAiInsights() {
     try {
       if (showToast) setRefreshing(true);
       const res = await getDashboardAiInsights({
-        schoolName: schoolName || branding?.schoolName || 'SES Educare'
+        schoolName: schoolName || branding?.schoolName || 'Arion School'
       });
       if (res.data?.success) {
         setInsights(res.data.data);
@@ -174,3 +174,4 @@ export default function DashboardAiInsights() {
     </div>
   );
 }
+

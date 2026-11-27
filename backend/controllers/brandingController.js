@@ -5,10 +5,10 @@ const fs = require('fs');
 
 const DEFAULT_BRANDING = {
   identity: {
-    schoolName: 'SES Educare',
+    schoolName: 'Arion School',
     shortName: 'SES',
     motto: 'One Platform. Complete School Management.',
-    description: 'Modern school management and education ERP platform by SES Educare.',
+    description: 'Modern school management and education ERP platform by Arion School.',
     affiliationBoard: 'CBSE',
     registrationNumber: 'ARION-SCH-2026',
     address: {
@@ -38,7 +38,7 @@ const DEFAULT_BRANDING = {
     themeMode: 'brand-chrome'
   },
   login: {
-    welcomeTitle: 'Welcome to SES Educare',
+    welcomeTitle: 'Welcome to Arion School',
     welcomeSubtitle: 'Unified School Management ERP Platform',
     bannerImageUrl: '',
     bgImageUrl: '',
@@ -51,8 +51,8 @@ const DEFAULT_BRANDING = {
     status: 'active'
   },
   email: {
-    senderName: 'SES Educare',
-    footerText: 'Powered by SES Educare School Management ERP.'
+    senderName: 'Arion School',
+    footerText: 'Powered by Arion School School Management ERP.'
   },
   document: {
     reportHeader: 'SES EDUCARE SCHOOL MANAGEMENT SYSTEM',
@@ -104,7 +104,7 @@ exports.getPublicBranding = async (req, res, next) => {
     }
 
     if (!branding) {
-      // Return default SES Educare branding
+      // Return default Arion School branding
       return res.status(200).json({
         success: true,
         source: 'default',
@@ -254,7 +254,7 @@ exports.resetBranding = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: 'Branding reset to SES Educare defaults',
+      message: 'Branding reset to Arion School defaults',
       data: DEFAULT_BRANDING
     });
   } catch (error) {
@@ -300,3 +300,4 @@ exports.uploadBrandingAsset = async (req, res, next) => {
     next(error);
   }
 };
+

@@ -10,7 +10,7 @@ export const brandingApi = {
   // Save/Update branding
   updateBranding: (data) => api.put('/branding', data),
 
-  // Reset to default SES Educare branding
+  // Reset to default Arion School branding
   resetBranding: () => api.post('/branding/reset'),
 
   // Upload logo or favicon asset
@@ -20,3 +20,4 @@ export const brandingApi = {
 };
 
 export default brandingApi;
+

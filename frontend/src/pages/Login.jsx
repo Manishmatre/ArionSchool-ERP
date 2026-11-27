@@ -239,7 +239,7 @@ const Login = () => {
         <p className="text-center text-xs text-slate-500 mt-6">
           © {new Date().getFullYear()} {schoolName}
           {showPlatformAttribution ? (
-            <span> • Powered by <span className="font-semibold text-slate-700">SES Educare</span> (STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED)</span>
+            <span> • Powered by <span className="font-semibold text-slate-700">Arion School</span> (STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED)</span>
           ) : (
             <span>. All rights reserved.</span>
           )}
@@ -251,3 +251,4 @@ const Login = () => {
 };
 
 export default Login;
+

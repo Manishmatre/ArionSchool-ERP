@@ -209,7 +209,7 @@ exports.sendNotification = async (req, res, next) => {
                 </a>
               ` : ''}
               <p style="color: #666; font-size: 12px; margin-top: 20px;">
-                This is an automated notification from SES Educare.
+                This is an automated notification from Arion School.
               </p>
             </div>
           `
@@ -409,3 +409,4 @@ exports.getNotificationStats = async (req, res, next) => {
 };
 
 module.exports = exports;
+

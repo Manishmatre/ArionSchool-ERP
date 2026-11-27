@@ -81,7 +81,7 @@ exports.getPublicPlatformConfig = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {
-        productName: config.productName === 'Arion School' ? 'SES Educare' : config.productName,
+        productName: config.productName === 'Arion School' ? 'Arion School' : config.productName,
         companyName: config.companyName === 'ArionexTech' ? 'STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED' : config.companyName,
         primaryDomain: config.primaryDomain === 'arionschool.com' ? 'seseducare.com' : config.primaryDomain,
         appDomain: config.appDomain === 'app.arionschool.com' ? 'myapp.seseducare.com' : config.appDomain,
@@ -143,7 +143,7 @@ exports.createPublicLead = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'Your school demo request has been received. The SES Educare team will contact you shortly.',
+      message: 'Your school demo request has been received. The Arion School team will contact you shortly.',
       data: lead
     });
   } catch (error) {
@@ -1332,14 +1332,14 @@ exports.getPlatformConfig = async (req, res, next) => {
       config = await PlatformConfig.create({ singletonKey: 'GLOBAL_PLATFORM_CONFIG' });
     }
     const data = config.toObject();
-    if (data.productName === 'Arion School') data.productName = 'SES Educare';
+    if (data.productName === 'Arion School') data.productName = 'Arion School';
     if (data.companyName === 'ArionexTech') data.companyName = 'STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED';
     if (data.primaryDomain === 'arionschool.com') data.primaryDomain = 'seseducare.com';
     if (data.appDomain === 'app.arionschool.com') data.appDomain = 'myapp.seseducare.com';
     if (data.adminConsoleDomain === 'admin.arionschool.com') data.adminConsoleDomain = 'admin.seseducare.com';
     if (data.supportEmail === 'support@arionschool.com') data.supportEmail = 'seseducare@gmail.com';
     if (String(data.maintenanceMessage || '').includes('Arion School')) {
-      data.maintenanceMessage = 'SES Educare School ERP is undergoing scheduled maintenance. Please check back soon.';
+      data.maintenanceMessage = 'Arion School School ERP is undergoing scheduled maintenance. Please check back soon.';
     }
     res.status(200).json({ success: true, data });
   } catch (error) {
@@ -1419,3 +1419,4 @@ exports.getAiTelemetry = async (req, res, next) => {
     next(error);
   }
 };
+

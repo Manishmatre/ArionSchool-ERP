@@ -550,7 +550,7 @@ exports.googleMobileAuthPage = (req, res) => {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Google Sign-In - SES Educare</title>
+  <title>Google Sign-In - Arion School</title>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -603,7 +603,7 @@ exports.googleMobileAuthPage = (req, res) => {
 </head>
 <body>
   <div class="auth-box">
-    <h2 class="auth-title">SES Educare Student</h2>
+    <h2 class="auth-title">Arion School Student</h2>
     <p class="auth-sub">Sign in with your Google account to access courses, live classes and digital records</p>
     
     <div id="g_id_onload"
@@ -628,7 +628,7 @@ exports.googleMobileAuthPage = (req, res) => {
     </div>
 
     <div id="loadingNotice" class="loading-notice">
-      Authenticating with SES Educare...
+      Authenticating with Arion School...
     </div>
   </div>
 
@@ -651,3 +651,4 @@ exports.googleMobileAuthPage = (req, res) => {
   res.setHeader('Content-Type', 'text/html');
   res.send(html);
 };
+

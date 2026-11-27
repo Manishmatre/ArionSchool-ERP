@@ -137,7 +137,7 @@ export default function StudentDashboard() {
   ];
   const COLORS = ['#2563eb', '#e2e8f0'];
 
-  // Quick Action Modules matching SES Educare SaaS Architecture
+  // Quick Action Modules matching Arion School SaaS Architecture
   const academicServices = [
     {
       title: 'My Courses',
@@ -330,7 +330,7 @@ export default function StudentDashboard() {
               <p className="text-xs text-slate-500 mt-0.5 max-w-2xl">
                 {todayAttendance.punched
                   ? 'Your biometric/QR punch is verified with official study center records.'
-                  : 'Attendance cannot be marked from the web portal. To punch daily attendance, scan your Study Center QR Code via the SES Educare Mobile App.'}
+                  : 'Attendance cannot be marked from the web portal. To punch daily attendance, scan your Study Center QR Code via the Arion School Mobile App.'}
               </p>
             </div>
           </div>
@@ -836,7 +836,7 @@ export default function StudentDashboard() {
             </div>
             <div>
               <p className="text-xs font-bold text-slate-800">
-                SES Educare Certified Education Network
+                Arion School Certified Education Network
               </p>
               <p className="text-[11px] text-slate-500 mt-0.5">
                 Official learning curriculum, digital student credentials, and examination records are cryptographically verified and recognized.
@@ -860,3 +860,4 @@ export default function StudentDashboard() {
     </Layout>
   );
 }
+

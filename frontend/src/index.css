@@ -392,7 +392,7 @@ input:disabled, select:disabled, textarea:disabled {
 .compact-ui .p-8 { padding: 1rem !important; }
 
 /* ============================================================
-   Custom Toast Notifications (SES Educare Navy Theme)
+   Custom Toast Notifications (Arion School Navy Theme)
    ============================================================ */
 .Toastify__toast-container {
   width: min(390px, calc(100vw - 24px));
@@ -699,3 +699,4 @@ html[data-theme-mode="full-dark"] .badge-primary {
   background-color: rgb(var(--brand-600) / 0.24) !important;
   color: rgb(var(--brand-200)) !important;
 }
+

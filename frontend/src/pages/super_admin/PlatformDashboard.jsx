@@ -340,7 +340,7 @@ export default function PlatformDashboard() {
         >
           <form onSubmit={handleBroadcastSubmit} className="space-y-4 text-xs">
             <p className="text-slate-500">
-              Send an urgent platform-wide notification to all school administrators and principals across SES Educare SaaS.
+              Send an urgent platform-wide notification to all school administrators and principals across Arion School SaaS.
             </p>
             <div>
               <label className="block font-semibold text-slate-700 mb-1">Announcement Headline *</label>
@@ -386,3 +386,4 @@ export default function PlatformDashboard() {
     </Layout>
   );
 }
+

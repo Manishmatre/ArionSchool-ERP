@@ -37,7 +37,7 @@ const ensureCampusId = async (req) => {
     let defaultCampus = await Franchise.findOne({ status: 'active' }) || await Franchise.findOne();
     if (!defaultCampus) {
       defaultCampus = await Franchise.create({
-        name: 'SES Educare - Main Campus',
+        name: 'Arion School - Main Campus',
         code: 'SES-001',
         status: 'active',
         isMainBranch: true,
@@ -782,3 +782,4 @@ exports.seedSchoolDefaults = async (req, res, next) => {
     next(error);
   }
 };
+

@@ -173,7 +173,7 @@ const ManageAttendance = () => {
 
       ctx.fillStyle = '#1e293b';
       ctx.font = '19px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      ctx.fillText('1. Open the SES Educare LMS Mobile App on your phone.', 130, 960);
+      ctx.fillText('1. Open the Arion School LMS Mobile App on your phone.', 130, 960);
       ctx.fillText('2. Tap the QR Punch tab in the bottom menu bar.', 130, 1010);
       ctx.fillText('3. Point your camera at this QR code to mark your daily attendance.', 130, 1060);
 
@@ -181,7 +181,7 @@ const ManageAttendance = () => {
       ctx.textAlign = 'center';
       ctx.fillStyle = '#94a3b8';
       ctx.font = '600 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      ctx.fillText('SES Educare LMS · Student Attendance System', 500, 1260);
+      ctx.fillText('Arion School LMS · Student Attendance System', 500, 1260);
 
       // Trigger download
       const a = document.createElement('a');
@@ -748,3 +748,4 @@ const ManageAttendance = () => {
 };
 
 export default ManageAttendance;
+

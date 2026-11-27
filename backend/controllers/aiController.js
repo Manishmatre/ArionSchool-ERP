@@ -25,7 +25,7 @@ exports.chatWithAssistant = async (req, res) => {
       franchiseId,
       conversationId,
       message: message.trim(),
-      schoolName: schoolName || 'SES Educare'
+      schoolName: schoolName || 'Arion School'
     });
 
     res.status(200).json({
@@ -103,7 +103,7 @@ exports.getDashboardInsights = async (req, res) => {
     const insights = await aiService.generateDashboardInsights({
       user: req.user,
       franchiseId,
-      schoolName: req.query.schoolName || 'SES Educare'
+      schoolName: req.query.schoolName || 'Arion School'
     });
 
     res.status(200).json({
@@ -230,7 +230,7 @@ exports.generateCommunicationDraft = async (req, res) => {
       audience,
       language: language || 'English',
       keyPoints,
-      schoolName: schoolName || 'SES Educare'
+      schoolName: schoolName || 'Arion School'
     });
 
     res.status(200).json({
@@ -320,3 +320,4 @@ exports.getAiConfig = async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch AI configuration' });
   }
 };
+

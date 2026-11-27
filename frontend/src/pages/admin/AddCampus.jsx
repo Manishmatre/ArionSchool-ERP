@@ -168,7 +168,7 @@ const AddCampus = () => {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="e.g. SES Educare Patna Main Center"
+                  placeholder="e.g. Arion School Patna Main Center"
                   className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:ring-2 focus:ring-primary-500 focus:outline-none"
                   required
                 />
@@ -404,3 +404,4 @@ const AddCampus = () => {
 };
 
 export default AddCampus;
+

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 /**
  * EditCourse forwarder:
  * Replaces the legacy multistep wizard with the unified, modular Course Details
- * layout matching SES Educare SaaS, opening directly in edit mode.
+ * layout matching Arion School SaaS, opening directly in edit mode.
  */
 const EditCourse = () => {
   const { id } = useParams();
@@ -22,3 +22,4 @@ const EditCourse = () => {
 };
 
 export default EditCourse;
+

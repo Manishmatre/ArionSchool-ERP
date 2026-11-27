@@ -205,7 +205,7 @@ const EditCampus = () => {
             <FormGrid>
               <div>
                 <label className="form-label">School Campus Name *</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} className="input-field" placeholder="e.g., SES Educare Delhi" required />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} className="input-field" placeholder="e.g., Arion School Delhi" required />
               </div>
               <div>
                 <label className="form-label">Campus Code *</label>
@@ -506,3 +506,4 @@ const EditCampus = () => {
 };
 
 export default EditCampus;
+

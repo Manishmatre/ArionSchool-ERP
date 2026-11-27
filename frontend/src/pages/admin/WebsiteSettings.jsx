@@ -139,7 +139,7 @@ const WebsiteSettings = () => {
                 name="siteName"
                 value={settings.siteName || ''}
                 onChange={handleChange}
-                placeholder="e.g. SES Educare"
+                placeholder="e.g. Arion School"
               />
               <TextField
                 label="Site Tagline"
@@ -271,3 +271,4 @@ const WebsiteSettings = () => {
 };
 
 export default WebsiteSettings;
+

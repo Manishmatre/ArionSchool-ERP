@@ -13,7 +13,7 @@ exports.getFooter = async (req, res) => {
     if (!footer) {
       footer = await Footer.create({
         about: {
-          description: 'SES Educare - Your trusted partner in education and skill development.',
+          description: 'Arion School - Your trusted partner in education and skill development.',
           tagline: 'Empowering Education, Enriching Lives'
         },
         quickLinks: [
@@ -58,7 +58,7 @@ exports.getFooter = async (req, res) => {
         copyright: {
           text: 'All rights reserved.',
           year: new Date().getFullYear(),
-          companyName: 'SES Educare'
+          companyName: 'Arion School'
         },
         businessHours: {
           weekdays: 'Mon - Fri: 9:00 AM - 6:00 PM',
@@ -360,3 +360,4 @@ exports.uploadTrustBadgeImage = async (req, res) => {
 };
 
 module.exports = exports;
+

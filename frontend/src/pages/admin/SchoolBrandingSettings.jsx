@@ -270,12 +270,12 @@ const SchoolBrandingSettings = () => {
 
   // Reset
   const handleReset = async () => {
-    if (window.confirm('Are you sure you want to reset all branding to official SES Educare defaults?')) {
+    if (window.confirm('Are you sure you want to reset all branding to official Arion School defaults?')) {
       try {
         setSaving(true);
         await resetToDefault();
         setForm(SES_DEFAULT_BRANDING);
-        toast.info('Branding reset to SES Educare official defaults');
+        toast.info('Branding reset to Arion School official defaults');
       } catch (err) {
         toast.error('Failed to reset branding');
       } finally {
@@ -480,7 +480,7 @@ const SchoolBrandingSettings = () => {
                 {form.visual?.logoUrl ? (
                   <img src={form.visual.logoUrl} alt="Primary Logo" className="max-h-full max-w-full object-contain" />
                 ) : (
-                  <span className="text-xs text-slate-400">Default Logo: SES Educare</span>
+                  <span className="text-xs text-slate-400">Default Logo: Arion School</span>
                 )}
               </div>
               <div className="flex items-center space-x-2">
@@ -768,7 +768,7 @@ const SchoolBrandingSettings = () => {
             <div className="md:col-span-2 pt-4 border-t border-slate-100 flex items-center justify-between">
               <div>
                 <span className="block font-semibold text-sm text-slate-800">Show Platform Attribution</span>
-                <span className="text-xs text-slate-500">Displays "Powered by SES Educare — STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED" at the footer of login screens.</span>
+                <span className="text-xs text-slate-500">Displays "Powered by Arion School — STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED" at the footer of login screens.</span>
               </div>
               <label className="relative inline-flex items-center cursor-pointer">
                 <input
@@ -933,7 +933,7 @@ const SchoolBrandingSettings = () => {
                   </div>
                 )}
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">{form.identity?.schoolName || 'SES Educare'}</h4>
+                  <h4 className="font-bold text-slate-900 text-sm">{form.identity?.schoolName || 'Arion School'}</h4>
                   <p className="text-xs text-slate-500">{form.identity?.motto || 'One Platform. Complete School Management.'}</p>
                 </div>
               </div>
@@ -974,7 +974,7 @@ const SchoolBrandingSettings = () => {
 
               {form.login?.showPlatformAttribution !== false && (
                 <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-100">
-                  Powered by <span className="font-semibold text-slate-600">SES Educare</span> — STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED
+                  Powered by <span className="font-semibold text-slate-600">Arion School</span> — STARTOLOGY EDUCARE SERVICES PRIVATE LIMITED
                 </div>
               )}
             </div>
@@ -1191,3 +1191,4 @@ const SchoolBrandingSettings = () => {
 };
 
 export default SchoolBrandingSettings;
+
