@@ -472,9 +472,6 @@ const startServer = async () => {
     const { autoSyncAppVersions } = require('./controllers/appVersionController');
     autoSyncAppVersions().catch(err => console.log('App version auto-sync non-blocking:', err.message));
 
-    const seedTestimonials = require('./seeders/testimonialSeeder');
-    seedTestimonials().catch(err => console.log('Testimonial seed non-blocking:', err.message));
-
     server.listen(PORT, () => {
       console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
       if (isProduction()) {

@@ -66,7 +66,7 @@ router.post('/:id/photo', authorizeStudentAccess, setStudentName, upload.single(
 router.delete('/:id/photo', authorizeStudentAccess, deleteProfilePicture);
 
 // Document upload route
-router.post('/:id/documents', authorizeStudentAccess, setStudentName, upload.single('document'), uploadStudentDocument);
+router.post('/:id/documents', authorize(...studentManageRoles), authorizeStudentAccess, setStudentName, upload.single('document'), uploadStudentDocument);
 
 // Get student test results for certificate generation
 router.get('/:id/results', authorize('super_admin', 'franchise_admin'), authorizeStudentAccess, getStudentResults);

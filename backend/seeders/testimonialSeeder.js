@@ -10,7 +10,7 @@ const sampleTestimonials = [
     title: 'From Complete Beginner to Software Developer',
     message: 'The comprehensive curriculum and continuous hands-on projects helped me transition into a high-paying tech career. The mentors were always there to guide me through complex programming topics.',
     avatar: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80',
-    type: 'student',
+    type: 'general',
     status: 'approved',
     isFeatured: true
   },
@@ -35,7 +35,7 @@ const sampleTestimonials = [
     title: 'Practical Skills That Delivered Results on Day 1',
     message: 'The digital marketing practical assignments and live campaign audits gave me actual portfolio work. I landed 3 client freelance projects before even finishing the certificate!',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
-    type: 'student',
+    type: 'general',
     status: 'approved',
     isFeatured: true
   },
@@ -81,3 +81,4 @@ const seedTestimonials = async () => {
 };
 
 module.exports = seedTestimonials;
+module.exports.sampleTestimonials = sampleTestimonials;
