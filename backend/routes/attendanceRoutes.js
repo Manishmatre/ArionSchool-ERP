@@ -22,7 +22,7 @@ const authorize = require('../middlewares/roleCheck');
 router.use(protect);
 
 // School RFID & Daily Attendance Routes
-router.post('/rfid-punch', rfidPunch);
+router.post('/rfid-punch', authorize('super_admin', 'school_owner', 'school_admin', 'principal', 'vice_principal', 'security_staff'), rfidPunch);
 router.get('/school-daily', authorize('super_admin', 'school_owner', 'franchise_admin', 'school_admin', 'principal', 'vice_principal', 'teacher', 'class_teacher'), getSchoolDailyAttendance);
 router.post('/school-daily', authorize('super_admin', 'school_owner', 'franchise_admin', 'school_admin', 'principal', 'vice_principal', 'teacher', 'class_teacher'), saveSchoolDailyAttendance);
 

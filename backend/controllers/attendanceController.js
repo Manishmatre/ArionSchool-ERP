@@ -1,5 +1,5 @@
 const Attendance = require('../models/Attendance');
-const { isSchoolTenantUser } = require('../utils/tenantAccess');
+const { isSchoolTenantUser, canAccessStudentRecord } = require('../utils/tenantAccess');
 const Student = require('../models/Student');
 const SchoolClass = require('../models/SchoolClass');
 const Staff = require('../models/Staff');
@@ -28,6 +28,15 @@ const canAccessSchoolClass = async (req, schoolClass, sectionId = '') => {
   return Boolean(await TimetableEntry.exists(assignmentQuery));
 };
 
+const isPlatformAttendanceManager = (user) => ['super_admin', 'school_owner'].includes(user?.role);
+const tenantIdFor = (user) => (user?.franchise?._id || user?.franchise)?.toString() || '';
+const canManageStudentAttendance = (user, student) => isPlatformAttendanceManager(user) || (
+  isSchoolTenantUser(user) && tenantIdFor(user) && tenantIdFor(user) === (student?.franchise?._id || student?.franchise)?.toString()
+);
+const canManageAttendanceRecord = (user, attendance) => isPlatformAttendanceManager(user) || (
+  isSchoolTenantUser(user) && tenantIdFor(user) && tenantIdFor(user) === (attendance?.franchise?._id || attendance?.franchise)?.toString()
+);
+
 // @desc    Get all attendance records
 // @route   GET /api/attendance
 // @access  Private (Super Admin / School Admin)
@@ -36,8 +45,8 @@ exports.getAllAttendance = async (req, res, next) => {
     let query = {};
 
     // If school admin, only show their franchise attendance
-    if (!['super_admin', 'school_owner'].includes(req.user.role)) {
-      query.franchise = req.user.franchise?._id || req.user.franchise;
+    if (!isPlatformAttendanceManager(req.user)) {
+      query.franchise = req.user.franchise?._id || req.user.franchise || null;
     } else if (req.query.franchise && req.query.franchise !== 'all') {
       query.franchise = req.query.franchise;
     }
@@ -110,23 +119,9 @@ exports.getStudentAttendance = async (req, res, next) => {
     if (!student) {
       return res.status(404).json({ success: false, message: 'Student not found.' });
     }
-
-    const userId = req.user._id.toString();
     const studentId = student._id.toString();
-    const studentCampusId = (student.franchise?._id || student.franchise)?.toString();
-    const userCampusId = (req.user.franchise?._id || req.user.franchise)?.toString();
-    const sameCampus = Boolean(studentCampusId && userCampusId && studentCampusId === userCampusId);
-    let authorized = ['super_admin', 'school_owner'].includes(req.user.role);
-    if (req.user.role === 'student') authorized = student.user?.toString() === userId;
-    if (req.user.role === 'parent') {
-      authorized = student.parent?.toString() === userId
-        || (Array.isArray(req.user.linkedStudents) && req.user.linkedStudents.some((id) => id.toString() === studentId))
-        || Boolean(req.user.mobile && (student.guardianInfo?.mobile === req.user.mobile || student.contactInfo?.mobile === req.user.mobile));
-    }
-    if (['school_admin', 'franchise_admin', 'principal', 'vice_principal', 'teacher', 'class_teacher', 'accountant'].includes(req.user.role)) {
-      authorized = sameCampus;
-    }
-    if (!authorized) {
+
+    if (!canAccessStudentRecord(req.user, student)) {
       return res.status(403).json({ success: false, message: 'You are not authorized to view this student’s attendance.' });
     }
     
@@ -172,6 +167,10 @@ exports.markAttendance = async (req, res, next) => {
         success: false,
         message: 'Student not found'
       });
+    }
+
+    if (!canManageStudentAttendance(req.user, student)) {
+      return res.status(403).json({ success: false, message: 'You cannot mark attendance outside your school.' });
     }
 
     // Check if attendance already marked for this date and session
@@ -242,6 +241,9 @@ exports.markAttendance = async (req, res, next) => {
 exports.bulkMarkAttendance = async (req, res, next) => {
   try {
     const { students, date, session, courseId } = req.body;
+    if (!Array.isArray(students) || students.length === 0) {
+      return res.status(400).json({ success: false, message: 'At least one student is required.' });
+    }
 
     const attendanceRecords = [];
     const errors = [];
@@ -252,6 +254,11 @@ exports.bulkMarkAttendance = async (req, res, next) => {
         
         if (!student) {
           errors.push({ studentId: studentData.studentId, error: 'Student not found' });
+          continue;
+        }
+
+        if (!canManageStudentAttendance(req.user, student)) {
+          errors.push({ studentId: studentData.studentId, error: 'Student is outside your school.' });
           continue;
         }
 
@@ -338,23 +345,38 @@ exports.updateAttendance = async (req, res, next) => {
       });
     }
 
+    if (!canManageAttendanceRecord(req.user, attendance)) {
+      return res.status(403).json({ success: false, message: 'You cannot change attendance outside your school.' });
+    }
+
+    const student = await Student.findById(attendance.student);
+    if (!student) return res.status(404).json({ success: false, message: 'Student not found for this attendance record.' });
+    if (!canManageStudentAttendance(req.user, student)) {
+      return res.status(403).json({ success: false, message: 'This attendance record does not match the student’s school.' });
+    }
+
+    const updates = {};
+    if (Object.hasOwn(req.body, 'status')) updates.status = req.body.status;
+    if (Object.hasOwn(req.body, 'remarks')) updates.remarks = req.body.remarks;
+    if (!Object.keys(updates).length) {
+      return res.status(400).json({ success: false, message: 'Provide an attendance status or remarks to update.' });
+    }
+
     const oldStatus = attendance.status;
-    const newStatus = req.body.status;
+    const newStatus = updates.status;
 
     attendance = await Attendance.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updates,
       { new: true, runValidators: true }
     );
 
     // Update student statistics if status changed
-    if (oldStatus !== newStatus) {
-      const student = await Student.findById(attendance.student);
-      
+    if (newStatus && oldStatus !== newStatus) {
       // Adjust attended classes count
       if ((oldStatus === 'present' || oldStatus === 'late') && 
           (newStatus !== 'present' && newStatus !== 'late')) {
-        student.attendance.attendedClasses -= 1;
+        student.attendance.attendedClasses = Math.max(0, student.attendance.attendedClasses - 1);
       } else if ((oldStatus !== 'present' && oldStatus !== 'late') && 
                  (newStatus === 'present' || newStatus === 'late')) {
         student.attendance.attendedClasses += 1;
@@ -405,11 +427,19 @@ exports.deleteAttendance = async (req, res, next) => {
       });
     }
 
+    if (!canManageAttendanceRecord(req.user, attendance)) {
+      return res.status(403).json({ success: false, message: 'You cannot delete attendance outside your school.' });
+    }
+
     // Update student statistics
     const student = await Student.findById(attendance.student);
-    student.attendance.totalClasses -= 1;
+    if (!student) return res.status(404).json({ success: false, message: 'Student not found for this attendance record.' });
+    if (!canManageStudentAttendance(req.user, student)) {
+      return res.status(403).json({ success: false, message: 'This attendance record does not match the student’s school.' });
+    }
+    student.attendance.totalClasses = Math.max(0, student.attendance.totalClasses - 1);
     if (attendance.status === 'present' || attendance.status === 'late') {
-      student.attendance.attendedClasses -= 1;
+      student.attendance.attendedClasses = Math.max(0, student.attendance.attendedClasses - 1);
     }
     student.attendance.attendancePercentage = 
       student.attendance.totalClasses > 0
@@ -457,19 +487,15 @@ exports.getAttendanceStats = async (req, res, next) => {
       query.franchise = req.query.franchise;
     }
 
-    console.log('Stats query params:', req.query);
-
     // Single date filter
     if (req.query.date) {
       const day = new Date(req.query.date);
-      console.log('Filtering by date:', day);
       if (!isNaN(day.getTime())) {
         const start = new Date(day);
         start.setHours(0, 0, 0, 0);
         const end = new Date(day);
         end.setHours(23, 59, 59, 999);
         query.date = { $gte: start, $lte: end };
-        console.log('Date query:', query.date);
       }
     }
 
@@ -480,8 +506,6 @@ exports.getAttendanceStats = async (req, res, next) => {
         $lte: new Date(req.query.endDate)
       };
     }
-
-    console.log('Final query:', query);
 
     const totalRecords = await Attendance.countDocuments(query);
     const presentCount = await Attendance.countDocuments({ ...query, status: 'present' });
@@ -499,8 +523,6 @@ exports.getAttendanceStats = async (req, res, next) => {
       lateCount,
       overallPercentage
     };
-
-    console.log('Stats result:', result);
 
     res.status(200).json({
       success: true,
@@ -650,6 +672,10 @@ exports.punchQRAttendance = async (req, res, next) => {
         success: false,
         message: 'Student record not found for your account.'
       });
+    }
+
+    if (!student.franchise || student.franchise.toString() !== parsed.franchiseId) {
+      return res.status(403).json({ success: false, message: 'This attendance QR code is not assigned to your school.' });
     }
 
     // 2. Attendance date is ALWAYS the real-time CURRENT date when scanned (Today)
@@ -827,7 +853,14 @@ exports.rfidPunch = async (req, res, next) => {
       });
     }
 
-    const schoolFranchise = student.franchise || franchiseId || req.user?.franchise;
+    if (!canManageStudentAttendance(req.user, student)) {
+      return res.status(403).json({ success: false, message: 'RFID attendance is outside your school.' });
+    }
+
+    const schoolFranchise = student.franchise;
+    if (!schoolFranchise || (franchiseId && franchiseId !== schoolFranchise.toString())) {
+      return res.status(403).json({ success: false, message: 'RFID attendance is outside the selected school.' });
+    }
     const now = new Date();
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
