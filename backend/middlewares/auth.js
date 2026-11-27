@@ -65,6 +65,13 @@ exports.protect = async (req, res, next) => {
       });
     }
 
+    if ((decoded.ver || 0) !== (req.user.tokenVersion || 0)) {
+      return res.status(401).json({
+        success: false,
+        message: 'Session has expired. Please sign in again.'
+      });
+    }
+
     trackPlatformAction(req, res, req.user);
     
     next();

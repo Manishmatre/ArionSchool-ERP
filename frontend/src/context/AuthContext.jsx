@@ -108,8 +108,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    const token = localStorage.getItem('token');
     localStorage.removeItem('token');
     setUser(null);
+    if (token) {
+      api.post('/auth/logout', {}, { headers: { Authorization: `Bearer ${token}` } }).catch(() => {});
+    }
   };
 
   const updateUser = (updatedUserData) => {

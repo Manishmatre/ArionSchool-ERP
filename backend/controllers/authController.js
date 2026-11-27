@@ -7,8 +7,8 @@ const { sendPasswordResetEmail } = require('../utils/emailService');
 const { isSchoolTenantUser } = require('../utils/tenantAccess');
 
 // Generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (user) => {
+  return jwt.sign({ id: user._id, ver: user.tokenVersion || 0 }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE
   });
 };
@@ -88,7 +88,7 @@ exports.register = async (req, res) => {
       action: 'created', resource: 'user', path: '/api/auth/register', statusCode: 201,
     });
 
-    const token = generateToken(user._id);
+    const token = generateToken(user);
 
     res.status(201).json({
       success: true,
@@ -211,6 +211,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     user.password = password;
+    user.tokenVersion = (user.tokenVersion || 0) + 1;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
     await user.save();
@@ -218,7 +219,7 @@ exports.resetPassword = async (req, res) => {
       action: 'updated', resource: 'password', path: '/api/auth/reset-password/:token',
     });
 
-    const jwtToken = generateToken(user._id);
+    const jwtToken = generateToken(user);
 
     res.status(200).json({
       success: true,
@@ -239,10 +240,9 @@ exports.resetPassword = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const rawIdentifier = req.body.identifier || req.body.email;
-    const identifier = rawIdentifier ? String(rawIdentifier).trim() : '';
+    const identifierValue = rawIdentifier ? String(rawIdentifier).trim() : '';
+    const identifier = identifierValue.includes('@') ? identifierValue.toLowerCase() : identifierValue;
     const { password } = req.body; // identifier can be email or mobile
-
-    console.log('Login attempt:', { identifier });
 
     if (!identifier || !password) {
       return res.status(400).json({
@@ -257,20 +257,16 @@ exports.login = async (req, res) => {
     }).select('+password');
 
     if (!user) {
-      console.log('User not found:', identifier);
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
       });
     }
 
-    console.log('User found:', { email: user.email, role: user.role, schoolCampus: user.school || 'multi-campus' });
-
     // Check if password matches
     const isMatch = await user.comparePassword(password);
 
     if (!isMatch) {
-      console.log('Password mismatch for:', user.email);
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
@@ -278,18 +274,15 @@ exports.login = async (req, res) => {
     }
 
     if (!user.isActive) {
-      console.log('User account deactivated:', user.email);
       return res.status(401).json({
         success: false,
         message: 'Your account has been deactivated'
       });
     }
 
-    console.log('Login successful for:', user.email);
-
     await recordLoginActivity(req, user, 'password');
 
-    const token = generateToken(user._id);
+    const token = generateToken(user);
 
     let profilePicture = user.profilePicture;
     let studentDetails = null;
@@ -381,6 +374,16 @@ exports.getMe = async (req, res) => {
       success: false,
       message: error.message
     });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    req.user.tokenVersion = (req.user.tokenVersion || 0) + 1;
+    await req.user.save({ validateBeforeSave: false });
+    return res.status(200).json({ success: true, message: 'Signed out successfully' });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Unable to end this session' });
   }
 };
 
@@ -488,7 +491,7 @@ exports.googleLogin = async (req, res) => {
       });
     }
 
-    const jwtToken = generateToken(user._id);
+    const jwtToken = generateToken(user);
     await recordLoginActivity(req, user, 'google');
 
     let profilePicture = user.profilePicture;
