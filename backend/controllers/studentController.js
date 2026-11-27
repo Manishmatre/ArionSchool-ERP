@@ -1,5 +1,6 @@
 const Student = require('../models/Student');
 const { isSchoolTenantUser } = require('../utils/tenantAccess');
+const { appendSearchConditions } = require('../utils/studentSearchQuery');
 require('../models/SchoolClass');
 require('../models/Section');
 require('../models/AcademicSession');
@@ -204,12 +205,13 @@ exports.getAllStudents = async (req, res, next) => {
     const page = parseInt(req.query.page, 10) || 1;
 
     if (search) {
-      query.$or = [
+      const searchConditions = [
         { 'personalInfo.firstName': { $regex: search, $options: 'i' } },
         { 'personalInfo.lastName': { $regex: search, $options: 'i' } },
         { studentId: { $regex: search, $options: 'i' } },
         { enrollmentNumber: { $regex: search, $options: 'i' } }
       ];
+      appendSearchConditions(query, searchConditions);
     }
 
     if (isPicker) {
