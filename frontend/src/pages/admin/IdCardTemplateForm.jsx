@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
-import TemplateEditorPage from '../../components/template-editor/TemplateEditorPage';
+import BuiltInTemplateForm from '../../components/template-editor/BuiltInTemplateForm';
 import { ID_CARD_FIELDS, ID_CARD_PREVIEW } from '../../components/template-editor/fieldCatalogs';
 import { sanitizeTemplateFields } from '../../components/template-editor/templateFieldUtils';
 import { createIdCardTemplate, updateIdCardTemplate, getIdCardTemplate } from '../../api/idCardApi';
@@ -75,13 +75,13 @@ const IdCardTemplateForm = () => {
           </Button>
         }
       />
-      <TemplateEditorPage
-        title="ID Card Canvas"
+      <BuiltInTemplateForm
+        title="ID Card Template" description="Choose the information to print and upload your school artwork." card
         templateData={templateData}
         setTemplateData={setTemplateData}
         fieldCatalog={ID_CARD_FIELDS}
         previewMap={ID_CARD_PREVIEW}
-        onSave={handleSave}
+        onSave={handleSave} metaSection={<></>}
         loading={loading}
       />
     </Layout>

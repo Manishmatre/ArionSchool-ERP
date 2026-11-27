@@ -27,10 +27,10 @@ router.get('/preview/:id', authorize('super_admin', 'franchise_admin', 'student'
 router.delete('/:id', authorize('super_admin', 'franchise_admin'), deleteIdCard);
 
 // Template Management Routes
-router.get('/templates', authorize('super_admin', 'franchise_admin'), getTemplates);
-router.get('/templates/:id', authorize('super_admin', 'franchise_admin'), getTemplateById);
-router.post('/templates', authorize('super_admin', 'franchise_admin'), createTemplate);
-router.put('/templates/:id', authorize('super_admin', 'franchise_admin'), updateTemplate);
-router.delete('/templates/:id', authorize('super_admin', 'franchise_admin'), deleteTemplate);
+router.get('/templates', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), getTemplates);
+router.get('/templates/:id', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), getTemplateById);
+router.post('/templates', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), createTemplate);
+router.put('/templates/:id', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), updateTemplate);
+router.delete('/templates/:id', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), deleteTemplate);
 
 module.exports = router;

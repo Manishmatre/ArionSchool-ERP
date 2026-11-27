@@ -359,10 +359,10 @@ exports.updateTemplate = async (req, res) => {
       });
     }
 
-    const templateImage = await resolveTemplateImageForSave(req.body.templateImage, template.templateImage);
+    const templateImage = req.body.clearTemplateImage ? '' : await resolveTemplateImageForSave(req.body.templateImage, template.templateImage);
     const updatedTemplate = await IdCardTemplate.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, templateImage },
+      { ...req.body, templateImage, clearTemplateImage: undefined },
       { new: true, runValidators: true }
     );
 

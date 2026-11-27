@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
-import TemplateEditorPage from '../../components/template-editor/TemplateEditorPage';
+import BuiltInTemplateForm from '../../components/template-editor/BuiltInTemplateForm';
 import { MARKSHEET_FIELDS, COMMON_PREVIEW } from '../../components/template-editor/fieldCatalogs';
 import { sanitizeTemplateFields } from '../../components/template-editor/templateFieldUtils';
 import { createMarksheetTemplate, updateMarksheetTemplate, getMarksheetTemplates } from '../../api/marksheetApi';
@@ -127,16 +127,16 @@ const MarksheetTemplateForm = () => {
     <Layout>
       <PageHeader
         title={isEditing ? 'Edit Marksheet Template' : 'Create Marksheet Template'}
-        description="Design student marksheet templates with drag-and-drop fields"
+        description="Choose fields for the built-in marksheet layout and add optional background artwork."
         actions={
           <Button variant="secondary" icon={FiArrowLeft} onClick={() => navigate('/admin/marksheet-templates')}>
             Back to List
           </Button>
         }
       />
-      <TemplateEditorPage
-        title="Marksheet Canvas"
-        description="Drag fields onto the template background"
+      <BuiltInTemplateForm
+        title="Marksheet Template" description="Choose what to print and upload a background design."
+
         templateData={templateData}
         setTemplateData={setTemplateData}
         fieldCatalog={MARKSHEET_FIELDS}
@@ -152,3 +152,4 @@ const MarksheetTemplateForm = () => {
 };
 
 export default MarksheetTemplateForm;
+

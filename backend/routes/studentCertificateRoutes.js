@@ -34,22 +34,22 @@ router.post('/batch-generate', authorize('super_admin', 'franchise_admin'), batc
 // @route   GET /api/student-certificates/templates
 // @desc    Get all student certificate templates
 // @access  Private/Admin/FranchiseAdmin
-router.get('/templates', authorize('super_admin', 'franchise_admin'), getStudentCertificateTemplates);
+router.get('/templates', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), getStudentCertificateTemplates);
 
 // @route   POST /api/student-certificates/templates
 // @desc    Create student certificate template
 // @access  Private/Admin
-router.post('/templates', authorize('super_admin'), createStudentCertificateTemplate);
+router.post('/templates', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), createStudentCertificateTemplate);
 
 // @route   PUT /api/student-certificates/templates/:id
 // @desc    Update student certificate template
 // @access  Private/Admin
-router.put('/templates/:id', authorize('super_admin'), updateStudentCertificateTemplate);
+router.put('/templates/:id', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), updateStudentCertificateTemplate);
 
 // @route   DELETE /api/student-certificates/templates/:id
 // @desc    Delete student certificate template
 // @access  Private/Admin
-router.delete('/templates/:id', authorize('super_admin'), deleteStudentCertificateTemplate);
+router.delete('/templates/:id', authorize('super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'), deleteStudentCertificateTemplate);
 
 // @route   GET /api/student-certificates/generated
 // @desc    Get all generated student certificates

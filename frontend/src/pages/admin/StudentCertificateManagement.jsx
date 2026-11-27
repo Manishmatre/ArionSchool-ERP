@@ -50,6 +50,7 @@ const StudentCertificateManagement = () => {
   // Fetch initial data (only generated certificates & schools to load fast)
   useEffect(() => {
     getAllFranchises().then(res => setFranchises(res.data || [])).catch(() => {});
+    loadTemplates();
   }, []);
 
   // Debounce search and reset pagination when the query changes.
@@ -269,8 +270,8 @@ const StudentCertificateManagement = () => {
               <button type="button" onClick={() => setActiveTab('generated')} className={tabClass('generated')}>
                 <FiFileText /> Generated Certificates
               </button>
-              {user.role === 'super_admin' && (
-                <button type="button" onClick={() => setActiveTab('templates')} className={tabClass('templates')}>
+              {['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'].includes(user.role) && (
+                <button type="button" onClick={() => templates[0] ? handleEditTemplate(templates[0]._id) : goToNewTemplate()} className={tabClass('templates')}>
                   <FiSettings /> Manage Templates
                 </button>
               )}
@@ -371,7 +372,7 @@ const StudentCertificateManagement = () => {
             <div className="p-4 sm:p-5 space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="section-title">Certificate Templates</h3>
-                <Button icon={FiPlus} onClick={goToNewTemplate}>Add Template</Button>
+                <Button icon={FiSettings} onClick={() => templates[0] ? handleEditTemplate(templates[0]._id) : goToNewTemplate()}>Manage Template</Button>
               </div>
 
               <TableWrapper>
@@ -391,7 +392,7 @@ const StudentCertificateManagement = () => {
                     {paginatedTemplates.length === 0 ? (
                       <TableEmpty colSpan={7} title="No templates found" description="Get started by creating your first certificate template." />
                     ) : (
-                      paginatedTemplates.map((template) => (
+                      paginatedTemplates.slice(0, 1).map((template) => (
                         <TableRow key={template._id}>
                           <TableCell>
                             <div className="flex items-center gap-3">
@@ -411,7 +412,6 @@ const StudentCertificateManagement = () => {
                           <TableCell>
                             <div className="flex items-center gap-0.5">
                               <IconButton icon={FiEdit2} variant="primary" title="Edit Template" onClick={() => handleEditTemplate(template._id)} />
-                              <IconButton icon={FiTrash2} variant="danger" title="Delete Template" onClick={() => handleDeleteTemplate(template._id)} />
                             </div>
                           </TableCell>
                         </TableRow>

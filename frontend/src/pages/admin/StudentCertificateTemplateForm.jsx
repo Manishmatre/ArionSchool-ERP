@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
-import TemplateEditorPage from '../../components/template-editor/TemplateEditorPage';
+import BuiltInTemplateForm from '../../components/template-editor/BuiltInTemplateForm';
 import { STUDENT_CERTIFICATE_FIELDS, COMMON_PREVIEW } from '../../components/template-editor/fieldCatalogs';
 import { sanitizeTemplateFields } from '../../components/template-editor/templateFieldUtils';
 import {
@@ -114,15 +114,15 @@ const StudentCertificateTemplateForm = () => {
     <Layout>
       <PageHeader
         title={isEditing ? 'Edit Certificate Template' : 'Create Certificate Template'}
-        description="Design student certificate templates"
+        description="Choose fields for the built-in certificate layout and add optional background artwork."
         actions={
           <Button variant="secondary" icon={FiArrowLeft} onClick={() => navigate('/admin/student-certificates')}>
             Back to List
           </Button>
         }
       />
-      <TemplateEditorPage
-        title="Certificate Canvas"
+      <BuiltInTemplateForm
+        title="Certificate Template" description="Choose what to print and upload a background design."
         templateData={templateData}
         setTemplateData={setTemplateData}
         fieldCatalog={STUDENT_CERTIFICATE_FIELDS}
@@ -138,3 +138,4 @@ const StudentCertificateTemplateForm = () => {
 };
 
 export default StudentCertificateTemplateForm;
+

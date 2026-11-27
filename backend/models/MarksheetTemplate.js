@@ -22,7 +22,7 @@ const marksheetTemplateSchema = new mongoose.Schema({
   },
   templateImage: {
     type: String,
-    required: true
+    default: ''
   },
   targetType: {
     type: String,

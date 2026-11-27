@@ -18,7 +18,7 @@ const studentCertificateTemplateSchema = new mongoose.Schema({
   },
   templateImage: {
     type: String,
-    required: [true, 'Please provide template image']
+    default: ''
   },
   targetType: {
     type: String,

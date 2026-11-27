@@ -63,6 +63,7 @@ export default function SectionNavTabs({ extraActions = null, portalRef = null }
         { label: 'Sections', path: '/admin/sections' },
         { label: 'Transfer Certificates (TC)', path: '/admin/transfer-certificates' },
         { label: 'ID Cards', path: '/admin/id-cards' },
+        { label: 'Student Certificates', path: '/admin/student-certificates' },
       ]
     },
     academics: {
@@ -178,6 +179,7 @@ export default function SectionNavTabs({ extraActions = null, portalRef = null }
         { label: 'Classes & Sections', path: '/school/classes' },
         { label: 'Transfer Certificates (TC)', path: '/school/transfer-certificates' },
         { label: 'ID Cards', path: '/school/id-cards' },
+        { label: 'Student Certificates', path: '/school/student-certificates' },
       ]
     },
     academics: {

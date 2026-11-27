@@ -13,7 +13,7 @@ const idCardTemplateSchema = new mongoose.Schema({
   },
   templateImage: {
     type: String,
-    required: [true, 'Please provide template image URL']
+    default: ''
   },
   fields: [templateFieldSchema],
   isActive: {

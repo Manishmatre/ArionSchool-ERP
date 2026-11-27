@@ -58,7 +58,7 @@ const MarksheetTemplates = () => {
           title="Marksheet Templates"
           subtitle="Manage your marksheet templates"
           icon={FiFileText}
-          actions={<Button icon={FiPlus} onClick={() => navigate('/admin/marksheet-templates/new')}>Add New Template</Button>}
+          actions={<Button icon={FiPlus} onClick={() => navigate('/admin/marksheet-templates/new')}>Create Template</Button>}
         />
 
         <TableWrapper>
@@ -96,3 +96,4 @@ const MarksheetTemplates = () => {
 };
 
 export default MarksheetTemplates;
+

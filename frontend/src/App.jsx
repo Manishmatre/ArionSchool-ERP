@@ -244,7 +244,7 @@ function App() {
           <Route
             path="/super_admin/dashboard"
             element={
-              <ProtectedRoute allowedRoles={['super_admin']}>
+              <ProtectedRoute allowedRoles={['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
                 <PlatformDashboard />
               </ProtectedRoute>
             }
@@ -252,7 +252,7 @@ function App() {
           <Route
             path="/super_admin/plans"
             element={
-              <ProtectedRoute allowedRoles={['super_admin']}>
+              <ProtectedRoute allowedRoles={['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
                 <ManageSubscriptionPlans />
               </ProtectedRoute>
             }
@@ -1608,7 +1608,7 @@ function App() {
           <Route
             path="/admin/marksheet-templates/new"
             element={
-              <ProtectedRoute allowedRoles={['super_admin']}>
+              <ProtectedRoute allowedRoles={['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
                 <MarksheetTemplateForm />
               </ProtectedRoute>
             }
@@ -1616,7 +1616,7 @@ function App() {
           <Route
             path="/admin/marksheet-templates/edit/:id"
             element={
-              <ProtectedRoute allowedRoles={['super_admin']}>
+              <ProtectedRoute allowedRoles={['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
                 <MarksheetTemplateForm />
               </ProtectedRoute>
             }
@@ -1804,6 +1804,22 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={['super_admin', 'school_admin']}>
                 <MarksheetManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/school/marksheet-templates/new"
+            element={
+              <ProtectedRoute allowedRoles={['school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
+                <MarksheetTemplateForm />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/school/marksheet-templates/edit/:id"
+            element={
+              <ProtectedRoute allowedRoles={['school_admin', 'principal', 'vice_principal', 'franchise_admin']}>
+                <MarksheetTemplateForm />
               </ProtectedRoute>
             }
           />

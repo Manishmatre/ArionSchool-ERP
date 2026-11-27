@@ -283,13 +283,14 @@ exports.updateStudentCertificateTemplate = async (req, res) => {
       });
     }
 
-    const templateImage = await resolveTemplateImageForSave(
+    const templateImage = req.body.clearTemplateImage ? '' : await resolveTemplateImageForSave(
       req.body.templateImage,
       existingTemplate.templateImage
     );
 
     const updateData = {
       ...req.body,
+      clearTemplateImage: undefined,
       templateImage
     };
 

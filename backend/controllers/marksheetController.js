@@ -123,10 +123,10 @@ exports.updateMarksheetTemplate = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Template not found' });
     }
 
-    const templateImage = await resolveTemplateImageForSave(req.body.templateImage, existing.templateImage);
+    const templateImage = req.body.clearTemplateImage ? '' : await resolveTemplateImageForSave(req.body.templateImage, existing.templateImage);
     const template = await MarksheetTemplate.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, templateImage },
+      { ...req.body, templateImage, clearTemplateImage: undefined },
       { new: true, runValidators: true }
     );
     res.status(200).json({ success: true, message: 'Template updated successfully', data: template });

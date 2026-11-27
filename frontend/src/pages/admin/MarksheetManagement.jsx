@@ -62,13 +62,12 @@ const MarksheetManagement = () => {
   // Fetch marksheets on page change or debounced search change
   useEffect(() => {
     fetchGeneratedMarksheets();
+    fetchTemplates();
   }, [generatedPage, debouncedQuery]);
 
   // Load templates only when templates tab is clicked
   useEffect(() => {
-    if (activeTab === 'templates' && templates.length === 0 && user.role === 'super_admin') {
-      fetchTemplates();
-    }
+    if (activeTab === 'templates' && templates.length === 0) fetchTemplates();
   }, [activeTab]);
 
   const fetchGeneratedMarksheets = async () => {
@@ -209,7 +208,8 @@ const MarksheetManagement = () => {
   };
 
   const handleEditTemplate = (templateId) => {
-    navigate(`/admin/marksheet-templates/edit/${templateId}`);
+    const basePath = user.role === 'super_admin' ? '/admin' : '/school';
+    navigate(`${basePath}/marksheet-templates/edit/${templateId}`);
   };
 
   const totalPages = Math.ceil(templates.length / itemsPerPage);
@@ -251,8 +251,8 @@ const MarksheetManagement = () => {
               <button type="button" onClick={() => setActiveTab('generated')} className={tabClass('generated')}>
                 <FiFileText /> Generated Marksheets
               </button>
-              {user.role === 'super_admin' && (
-                <button type="button" onClick={() => setActiveTab('templates')} className={tabClass('templates')}>
+              {['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'].includes(user.role) && (
+                <button type="button" onClick={() => templates[0] ? handleEditTemplate(templates[0]._id) : navigate(user.role === 'super_admin' ? '/admin/marksheet-templates/new' : '/school/marksheet-templates/new')} className={tabClass('templates')}>
                   <FiSettings /> Manage Templates
                 </button>
               )}
@@ -356,11 +356,11 @@ const MarksheetManagement = () => {
             </div>
           )}
 
-          {activeTab === 'templates' && user.role === 'super_admin' && (
+          {activeTab === 'templates' && (
             <div className="p-4 sm:p-5 space-y-4">
               <div className="flex justify-end">
-                <Button icon={FiPlus} onClick={() => navigate('/admin/marksheet-templates/new')}>
-                  Add Template
+                <Button icon={FiSettings} onClick={() => templates[0] ? handleEditTemplate(templates[0]._id) : navigate(user.role === 'super_admin' ? '/admin/marksheet-templates/new' : '/school/marksheet-templates/new')}>
+                  Manage Template
                 </Button>
               </div>
 
@@ -389,7 +389,7 @@ const MarksheetManagement = () => {
                     ) : paginatedTemplates.length === 0 ? (
                       <TableEmpty colSpan={6} title="No templates found" description="Create a marksheet template to get started." />
                     ) : (
-                      paginatedTemplates.map((template) => (
+                      paginatedTemplates.slice(0, 1).map((template) => (
                         <TableRow key={template._id}>
                           <TableCell>
                             <div className="flex items-center gap-3">
@@ -420,7 +420,6 @@ const MarksheetManagement = () => {
                           <TableCell>
                             <div className="flex items-center gap-0.5">
                               <IconButton icon={FiEdit2} variant="primary" title="Edit Template" onClick={() => handleEditTemplate(template._id)} />
-                              <IconButton icon={FiTrash2} variant="danger" title="Delete Template" onClick={() => handleDeleteTemplate(template._id)} />
                             </div>
                           </TableCell>
                         </TableRow>

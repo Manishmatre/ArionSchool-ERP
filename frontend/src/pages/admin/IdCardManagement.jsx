@@ -42,7 +42,7 @@ const IdCardManagement = () => {
     }
 
     try {
-      if (user.role === 'super_admin') {
+      if (['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'].includes(user.role)) {
         const requests = [getGeneratedIdCards(page, limit, search)];
         if (initial || activeTab === 'templates') {
           requests.unshift(getIdCardTemplates());
@@ -208,8 +208,8 @@ const IdCardManagement = () => {
                 <button type="button" onClick={() => setActiveTab('generated')} className={tabClass('generated')}>
                   <FiFileText /> Generated ID Cards
                 </button>
-                {user.role === 'super_admin' && (
-                  <button type="button" onClick={() => setActiveTab('templates')} className={tabClass('templates')}>
+                {['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'].includes(user.role) && (
+                  <button type="button" onClick={() => templates[0] ? navigate(user.role === 'super_admin' ? `/admin/id-cards/templates/${templates[0]._id}/edit` : `/school/id-cards/templates/${templates[0]._id}/edit`) : navigate(user.role === 'super_admin' ? '/admin/id-cards/templates/new' : '/school/id-cards/templates/new')} className={tabClass('templates')}>
                     <FiSettings /> Manage Templates
                   </button>
                 )}
@@ -293,7 +293,7 @@ const IdCardManagement = () => {
               </div>
             )}
 
-            {user.role === 'super_admin' && activeTab === 'templates' && (
+            {['super_admin', 'school_admin', 'principal', 'vice_principal', 'franchise_admin'].includes(user.role) && activeTab === 'templates' && (
               <div className="p-4 sm:p-5 space-y-4 relative">
                 {listLoading && <ListSpinner />}
                 <FilterBar>
@@ -303,7 +303,7 @@ const IdCardManagement = () => {
                     onChange={(e) => setFilters((prev) => ({ ...prev, search: e.target.value }))}
                     placeholder="Search templates..."
                   />
-                  <Button className="md:ml-auto" icon={FiPlus} onClick={() => navigate('/admin/id-cards/templates/new')}>Add Template</Button>
+                  <Button className="md:ml-auto" icon={FiSettings} onClick={() => templates[0] ? navigate(user.role === 'super_admin' ? `/admin/id-cards/templates/${templates[0]._id}/edit` : `/school/id-cards/templates/${templates[0]._id}/edit`) : navigate(user.role === 'super_admin' ? '/admin/id-cards/templates/new' : '/school/id-cards/templates/new')}>Manage Template</Button>
                 </FilterBar>
 
                 <TableWrapper>
@@ -321,7 +321,7 @@ const IdCardManagement = () => {
                       {paginatedTemplates.length === 0 ? (
                         <TableEmpty colSpan={5} title="No templates found" description="Get started by creating your first ID card template." />
                       ) : (
-                        paginatedTemplates.map((template) => (
+                        paginatedTemplates.slice(0, 1).map((template) => (
                           <TableRow key={template._id} className={deletingId === template._id ? 'opacity-50' : ''}>
                             <TableCell>
                               <div className="flex items-center gap-3">
@@ -334,8 +334,7 @@ const IdCardManagement = () => {
                             <TableCell>{new Date(template.createdAt).toLocaleDateString()}</TableCell>
                             <TableCell>
                               <div className="flex items-center gap-0.5">
-                                <IconButton icon={FiEdit2} variant="primary" title="Edit Template" onClick={() => navigate(`/admin/id-cards/templates/${template._id}/edit`)} />
-                                <IconButton icon={deletingId === template._id ? FiLoader : FiTrash2} variant="danger" title="Delete Template" disabled={deletingId === template._id} onClick={() => handleDeleteTemplate(template._id)} />
+                                <IconButton icon={FiEdit2} variant="primary" title="Edit Template" onClick={() => navigate(user.role === 'super_admin' ? `/admin/id-cards/templates/${template._id}/edit` : `/school/id-cards/templates/${template._id}/edit`)} />
                               </div>
                             </TableCell>
                           </TableRow>
