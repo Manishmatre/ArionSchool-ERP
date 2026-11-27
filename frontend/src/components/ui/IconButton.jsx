@@ -7,10 +7,11 @@ const VARIANTS = {
   neutral: 'text-slate-500 hover:bg-slate-100 hover:text-slate-700',
 };
 
-const IconButton = ({ icon: Icon, variant = 'neutral', title, onClick, className = '', disabled }) => (
+const IconButton = ({ icon: Icon, variant = 'neutral', title, ariaLabel, onClick, className = '', disabled }) => (
   <button
     type="button"
     title={title}
+    aria-label={ariaLabel || title}
     onClick={onClick}
     disabled={disabled}
     className={`p-2 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${VARIANTS[variant] || VARIANTS.neutral} ${className}`}

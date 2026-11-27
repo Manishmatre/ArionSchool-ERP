@@ -1,6 +1,6 @@
 // Arion School Web Platform Version
 // Auto-synced across all panels and navigation bars
-export const APP_VERSION = '2.0.131';
+export const APP_VERSION = '2.0.133';
 export const APP_NAME = 'Arion School';
 export const APP_FULL_TITLE = 'Arion School';
 export const APP_RELEASE_DATE = 'Nov 2026';

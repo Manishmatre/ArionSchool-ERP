@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Attendance = require('../models/Attendance');
 const { isSchoolTenantUser, canAccessStudentRecord } = require('../utils/tenantAccess');
 const Student = require('../models/Student');
@@ -1028,6 +1029,9 @@ exports.saveSchoolDailyAttendance = async (req, res, next) => {
     if (records.length !== new Set(records.map((record) => String(record.studentId))).size) {
       return res.status(400).json({ success: false, message: 'A student can appear only once in an attendance register.' });
     }
+    if (records.some((record) => !mongoose.Types.ObjectId.isValid(String(record.studentId || '')))) {
+      return res.status(400).json({ success: false, message: 'Attendance contains an invalid student ID.' });
+    }
     if (records.some((record) => !validStatuses.has(record.status))) {
       return res.status(400).json({ success: false, message: 'Mark every student present, absent, late, half-day, or on leave before saving.' });
     }
@@ -1083,7 +1087,7 @@ exports.saveSchoolDailyAttendance = async (req, res, next) => {
 
     await Attendance.bulkWrite(operations);
 
-    const studentIds = records.map((record) => record.studentId);
+    const studentIds = records.map((record) => new mongoose.Types.ObjectId(String(record.studentId)));
     const attendanceSummary = await Attendance.aggregate([
       { $match: { student: { $in: studentIds } } },
       {

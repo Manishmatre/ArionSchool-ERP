@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
 import Pagination from '../../components/Pagination';
-import { FiCalendar, FiList, FiCheck, FiX, FiUsers, FiPrinter, FiDownload } from 'react-icons/fi';
+import { FiCalendar, FiList, FiCheck, FiX, FiUsers, FiPrinter, FiDownload, FiTrash2, FiLoader } from 'react-icons/fi';
 import { useAuth } from '../../context/AuthContext';
 import { useSocket } from '../../context/SocketContext';
 import AttendanceCalendar from '../../components/AttendanceCalendar';
@@ -14,7 +14,7 @@ import { getAllFranchises } from '../../api/campusApi';
 import {
   StatCard, PageLoading, FilterBar, FilterBarActions, SearchInput, SelectField, Button,
   TableWrapper, Table, TableHead, TableBody, TableRow, TableHeader, TableCell, TableEmpty,
-  StatusBadge,
+  StatusBadge, IconButton,
 } from '../../components/ui';
 
 const ManageAttendance = () => {
@@ -24,6 +24,7 @@ const ManageAttendance = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [markLoading, setMarkLoading] = useState(false);
+  const [deletingAttendanceId, setDeletingAttendanceId] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [statusFilter, setStatusFilter] = useState('all');
@@ -208,6 +209,37 @@ const ManageAttendance = () => {
     if (socket) {
       socket.on('attendance-updated', (data) => {
         console.log('Real-time attendance update:', data);
+
+        if (data.action === 'deleted') {
+          const deletedDate = new Date(data.date).toLocaleDateString('en-CA');
+          if (!dateFilter || deletedDate === dateFilter) {
+            setAttendance((prev) => {
+              const updated = { ...prev };
+              if (Array.isArray(updated[data.studentId])) {
+                updated[data.studentId] = updated[data.studentId].filter((record) => record._id !== data.attendanceId);
+              } else if (updated[data.studentId]?._id === data.attendanceId) {
+                updated[data.studentId] = null;
+              }
+              return updated;
+            });
+            setStats((prev) => {
+              if (!prev) return prev;
+              const totalRecords = Math.max(0, (prev.totalRecords || 0) - 1);
+              const presentCount = Math.max(0, (prev.presentCount || 0) - (data.status === 'present' ? 1 : 0));
+              const absentCount = Math.max(0, (prev.absentCount || 0) - (data.status === 'absent' ? 1 : 0));
+              const lateCount = Math.max(0, (prev.lateCount || 0) - (data.status === 'late' ? 1 : 0));
+              return {
+                ...prev,
+                totalRecords,
+                presentCount,
+                absentCount,
+                lateCount,
+                overallPercentage: totalRecords ? Number(((presentCount / totalRecords) * 100).toFixed(2)) : 0,
+              };
+            });
+          }
+          return;
+        }
         
         // Update local state instead of refetching
         if (data.studentId && data.status && data.date) {
@@ -498,6 +530,30 @@ const ManageAttendance = () => {
     }
   };
 
+  const handleDeleteAttendance = async (student, record) => {
+    if (!record?._id || deletingAttendanceId) return;
+    const studentName = `${student.personalInfo?.firstName || ''} ${student.personalInfo?.lastName || ''}`.trim() || student.studentId;
+    if (!window.confirm(`Delete ${studentName}'s attendance for ${dateFilter}? This action cannot be undone.`)) return;
+
+    setDeletingAttendanceId(record._id);
+    try {
+      await deleteAttendance(record._id);
+      setAttendance((prev) => ({
+        ...prev,
+        [student._id]: Array.isArray(prev[student._id])
+          ? prev[student._id].filter((item) => item._id !== record._id)
+          : null,
+      }));
+      await fetchStats();
+      toast.success('Attendance record deleted successfully');
+    } catch (error) {
+      console.error('Delete attendance error:', error);
+      toast.error(error.response?.data?.message || 'Failed to delete attendance record');
+    } finally {
+      setDeletingAttendanceId('');
+    }
+  };
+
 
 
   if (loading) {
@@ -531,7 +587,7 @@ const ManageAttendance = () => {
           <StatCard title="Total Records" tone="info" icon={FiCalendar} value={stats?.totalRecords || 0} />
           <StatCard title="Present" tone="success" icon={FiCheck} value={stats?.presentCount || 0} />
           <StatCard title="Absent" tone="danger" icon={FiX} value={stats?.absentCount || 0} />
-          <StatCard title="Avg. Attendance" tone="purple" icon={FiUsers} value={`${stats?.averagePercentage?.toFixed(1) || 0}%`} />
+          <StatCard title="Avg. Attendance" tone="purple" icon={FiUsers} value={`${Number(stats?.averagePercentage ?? stats?.overallPercentage ?? 0).toFixed(1)}%`} />
         </div>
 
         <FilterBar>
@@ -601,12 +657,23 @@ const ManageAttendance = () => {
                     </TableCell>
                     <TableCell>
                       {attendanceRecord ? (
-                        <SelectField value={attendanceRecord.status} onChange={(e) => handleMarkAttendance(student._id, e.target.value)} disabled={markLoading} className="w-36">
-                          <option value="present">Present</option>
-                          <option value="absent">Absent</option>
-                          <option value="half_day">Half Day</option>
-                          <option value="leave">Leave</option>
-                        </SelectField>
+                        <div className="flex items-center gap-2">
+                          <SelectField value={attendanceRecord.status} onChange={(e) => handleMarkAttendance(student._id, e.target.value)} disabled={markLoading || Boolean(deletingAttendanceId)} className="w-36">
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                            <option value="late">Late</option>
+                            <option value="half_day">Half Day</option>
+                            <option value="leave">Leave</option>
+                          </SelectField>
+                          <IconButton
+                            icon={deletingAttendanceId === attendanceRecord._id ? FiLoader : FiTrash2}
+                            variant="danger"
+                            title={`Delete attendance for ${student.personalInfo?.firstName || student.studentId}`}
+                            ariaLabel={`Delete attendance for ${student.personalInfo?.firstName || student.studentId}`}
+                            onClick={() => handleDeleteAttendance(student, attendanceRecord)}
+                            disabled={markLoading || Boolean(deletingAttendanceId)}
+                          />
+                        </div>
                       ) : (
                         <div className="flex flex-wrap gap-1.5">
                           <Button className="text-xs py-1.5 px-2.5" variant="success" onClick={() => handleMarkAttendance(student._id, 'present')} disabled={markLoading}>Present</Button>

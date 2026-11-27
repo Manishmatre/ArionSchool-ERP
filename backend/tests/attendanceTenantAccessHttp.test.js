@@ -175,6 +175,34 @@ test('live attendance APIs isolate school records and prevent cross-tenant write
     assert.equal(foreignQr.status, 403, 'student cannot use another school QR code');
     console.log('PASS foreign-school QR punch rejected');
 
+    const dailySave = await request(adminA, '/school-daily', 'POST', {
+      schoolClass: classA._id,
+      section: undefined,
+      date: '2026-11-24',
+      records: [{ studentId: String(studentA._id), status: 'present', remarks: 'Daily register test' }]
+    });
+    assert.equal(dailySave.status, 200, 'same-school daily register save should succeed');
+    let dailyRecord = await Attendance.findOne({ student: studentA._id, date: { $gte: new Date('2026-11-24'), $lt: new Date('2026-11-25') } });
+    assert.equal(dailyRecord?.status, 'present');
+    let studentSummary = await Student.findById(studentA._id).select('attendance').lean();
+    assert.equal(studentSummary.attendance.totalClasses, 2);
+    assert.equal(studentSummary.attendance.attendedClasses, 1);
+
+    const dailyEdit = await request(adminA, '/school-daily', 'POST', {
+      schoolClass: classA._id,
+      date: '2026-11-24',
+      records: [{ studentId: String(studentA._id), status: 'absent', remarks: 'Edited daily register test' }]
+    });
+    assert.equal(dailyEdit.status, 200, 'daily register edit should succeed');
+    assert.equal(await Attendance.countDocuments({ student: studentA._id, date: { $gte: new Date('2026-11-24'), $lt: new Date('2026-11-25') } }), 1, 'editing the register must not create duplicate attendance');
+    dailyRecord = await Attendance.findOne({ student: studentA._id, date: { $gte: new Date('2026-11-24'), $lt: new Date('2026-11-25') } });
+    assert.equal(dailyRecord.status, 'absent');
+    assert.equal(dailyRecord.remarks, 'Edited daily register test');
+    studentSummary = await Student.findById(studentA._id).select('attendance').lean();
+    assert.equal(studentSummary.attendance.totalClasses, 2);
+    assert.equal(studentSummary.attendance.attendedClasses, 0, 'attendance counters must reflect status edits');
+    console.log('PASS daily register saves, reloads, edits without duplicates, and recalculates student totals');
+
     const ownDelete = await request(adminA, `/${recordA._id}`, 'DELETE');
     assert.equal(ownDelete.status, 200, 'same-school attendance delete should succeed');
     assert.equal(await Attendance.exists({ _id: recordA._id }), null);

@@ -1,6 +1,6 @@
 {
   "name": "edutest-pro-backend",
-  "version": "2.0.131",
+  "version": "2.0.133",
   "description": "Arion School School Management ERP backend",
   "main": "server.js",
   "scripts": {

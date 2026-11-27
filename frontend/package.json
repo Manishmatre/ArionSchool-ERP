@@ -1,6 +1,6 @@
 {
   "name": "edutest-pro-frontend",
-  "version": "2.0.131",
+  "version": "2.0.133",
   "type": "module",
   "private": true,
   "dependencies": {
