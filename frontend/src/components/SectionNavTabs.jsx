@@ -93,7 +93,8 @@ export default function SectionNavTabs({ extraActions = null, portalRef = null }
       tabs: [
         { label: 'Examinations', path: '/admin/examinations' },
         { label: 'Anti-Cheat Seating', path: '/admin/exam-seating' },
-        { label: 'CCE Report Cards', path: '/admin/marksheet-templates' },
+        { label: 'Manage Marksheets', path: '/admin/marksheet-templates' },
+        { label: 'Generate Marksheet', path: '/admin/generate-marksheet' },
         { label: 'MCQ & Quiz Bank', path: '/admin/mcqs' },
       ]
     },
@@ -203,7 +204,8 @@ export default function SectionNavTabs({ extraActions = null, portalRef = null }
       tabs: [
         { label: 'Examinations', path: '/school/examinations' },
         { label: 'Anti-Cheat Seating', path: '/school/exam-seating' },
-        { label: 'CCE Report Cards', path: '/school/marksheet-templates' },
+        { label: 'Manage Marksheets', path: '/school/marksheet-templates' },
+        { label: 'Generate Marksheet', path: '/school/generate-marksheet' },
       ]
     },
     payments: {

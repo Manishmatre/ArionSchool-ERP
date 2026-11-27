@@ -147,9 +147,10 @@ const Sidebar = ({ role, user, isOpen = true, toggleSidebar = () => { } }) => {
     {
       path: '/admin/marksheet-templates',
       icon: FiFileText,
-      label: 'Marks Entry & CCE Cards',
+      label: 'Manage Marksheets',
       matchPrefixes: ['/admin/marksheet-templates', '/admin/generate-marksheet']
     },
+    { path: '/admin/generate-marksheet', icon: FiPrinter, label: 'Generate Marksheet', matchPrefixes: ['/admin/generate-marksheet'] },
     {
       path: '/admin/reports/student-performance',
       icon: FiTrendingUp,
@@ -390,9 +391,11 @@ const Sidebar = ({ role, user, isOpen = true, toggleSidebar = () => { } }) => {
     {
       path: '/school/examinations',
       icon: FiAward,
-      label: 'Examinations & CCE',
+      label: 'Examinations',
       matchPrefixes: ['/school/examinations']
     },
+    { path: '/school/marksheet-templates', icon: FiFileText, label: 'Manage Marksheets', matchPrefixes: ['/school/marksheet-templates'] },
+    { path: '/school/generate-marksheet', icon: FiPrinter, label: 'Generate Marksheet', matchPrefixes: ['/school/generate-marksheet'] },
 
     // Fees & Accounts
     { section: 'Fees & Accounts' },
