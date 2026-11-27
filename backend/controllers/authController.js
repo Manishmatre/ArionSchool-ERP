@@ -60,13 +60,29 @@ exports.getLoginActivity = async (req, res) => {
 // @access  Public
 exports.register = async (req, res) => {
   try {
-    const { name, email, mobile, password, role } = req.body;
-
+    const { name, email, mobile, password } = req.body;
     const normalizedEmail = String(email || '').toLowerCase().trim();
+    const requestedRole = String(req.body.role || 'student').trim().toLowerCase();
+
+    if (!['student', 'parent'].includes(requestedRole)) {
+      return res.status(403).json({
+        success: false,
+        message: 'Public registration is available for student and parent accounts only'
+      });
+    }
+
+    if (!String(name || '').trim() || !normalizedEmail || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Name, email, and password are required'
+      });
+    }
 
     // Check if user already exists
+    const duplicateConditions = [{ email: normalizedEmail }];
+    if (mobile && String(mobile).trim()) duplicateConditions.push({ mobile: String(mobile).trim() });
     const userExists = await User.findOne({
-      $or: [{ email: normalizedEmail }, { mobile: mobile || null }]
+      $or: duplicateConditions
     });
 
     if (userExists) {
@@ -82,7 +98,7 @@ exports.register = async (req, res) => {
       email: normalizedEmail,
       mobile,
       password,
-      role: role || 'student'
+      role: requestedRole
     });
     await recordUserAction(req, user, {
       action: 'created', resource: 'user', path: '/api/auth/register', statusCode: 201,
@@ -105,6 +121,12 @@ exports.register = async (req, res) => {
       }
     });
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists with this email or mobile'
+      });
+    }
     res.status(500).json({
       success: false,
       message: error.message

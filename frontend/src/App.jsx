@@ -9,7 +9,6 @@ import ReportsLayout from './components/ReportsLayout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import RegisterSuperAdmin from './pages/RegisterSuperAdmin';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -225,7 +224,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/register-super-admin" element={<RegisterSuperAdmin />} />
+          <Route path="/register-super-admin" element={<Navigate to="/login" replace />} />
 
           {/* Public Routes */}
           <Route path="/verify-certificate" element={<CertificateVerification />} />

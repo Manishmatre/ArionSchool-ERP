@@ -13,12 +13,42 @@ test('live auth APIs accept case-insensitive email, validate credentials, and re
   assert.ok(process.env.MONGODB_URI && process.env.JWT_SECRET);
   const suffix = `authit${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
   const email = `${suffix}@example.com`;
+  const registrationEmail = `${suffix}reg@example.com`;
   let user;
+  let registeredUser;
   await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 15000, connectTimeoutMS: 15000 });
 
   try {
     user = await User.create({ name: 'Auth Integration', email, password: 'AuthTestPassword123!', role: 'student', isActive: true });
     const base = `http://127.0.0.1:${process.env.PORT || 5000}/api/auth`;
+    const superAdminRegistration = await fetch(`${base}/register`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: 'Privilege Escalation Attempt', email: registrationEmail,
+        password: 'AuthTestPassword123!', role: 'super_admin'
+      })
+    });
+    assert.equal(superAdminRegistration.status, 403, 'public registration must reject privileged roles');
+    assert.equal(await User.exists({ email: registrationEmail }), null, 'rejected registration must not create an account');
+    console.log('PASS public super_admin registration rejected: HTTP 403');
+
+    const registration = await fetch(`${base}/register`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Auth Registration', email: registrationEmail, password: 'AuthTestPassword123!' })
+    });
+    assert.equal(registration.status, 201, 'valid student registration should succeed');
+    const registrationBody = await registration.json();
+    assert.equal(registrationBody.user.role, 'student', 'public registration defaults to student');
+    registeredUser = await User.findById(registrationBody.user.id);
+    console.log('PASS student registration: HTTP 201');
+
+    const duplicateRegistration = await fetch(`${base}/register`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Duplicate Registration', email: registrationEmail.toUpperCase(), password: 'AuthTestPassword123!' })
+    });
+    assert.equal(duplicateRegistration.status, 400, 'duplicate email registration should be rejected case-insensitively');
+    console.log('PASS case-insensitive duplicate registration rejected: HTTP 400');
+
     const invalid = await fetch(`${base}/login`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ identifier: email.toUpperCase(), password: 'WrongPassword123!' })
@@ -34,6 +64,17 @@ test('live auth APIs accept case-insensitive email, validate credentials, and re
     const loginBody = await login.json();
     assert.ok(loginBody.token);
     console.log('PASS valid uppercase-email login: HTTP 200');
+
+    user.isActive = false;
+    await user.save({ validateBeforeSave: false });
+    const inactiveLogin = await fetch(`${base}/login`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ identifier: email, password: 'AuthTestPassword123!' })
+    });
+    assert.equal(inactiveLogin.status, 401, 'inactive accounts must not authenticate');
+    user.isActive = true;
+    await user.save({ validateBeforeSave: false });
+    console.log('PASS deactivated account login rejected: HTTP 401');
 
     const authHeaders = { Authorization: `Bearer ${loginBody.token}` };
     const me = await fetch(`${base}/me`, { headers: authHeaders });
@@ -92,8 +133,18 @@ test('live auth APIs accept case-insensitive email, validate credentials, and re
     console.log('PASS password reset revokes old token and issues current token');
   } finally {
     if (user?._id) {
-      await LoginActivity.deleteMany({ user: user._id });
-      await User.deleteOne({ _id: user._id });
+      const userId = user._id;
+      await LoginActivity.deleteMany({ user: userId });
+      await User.deleteOne({ _id: userId });
+      assert.equal(await User.exists({ _id: userId }), null, 'auth fixture user must be removed');
+      assert.equal(await LoginActivity.exists({ user: userId }), null, 'auth fixture activity must be removed');
+    }
+    if (registeredUser?._id) {
+      const registeredUserId = registeredUser._id;
+      await LoginActivity.deleteMany({ user: registeredUserId });
+      await User.deleteOne({ _id: registeredUserId });
+      assert.equal(await User.exists({ _id: registeredUserId }), null, 'registration fixture user must be removed');
+      assert.equal(await LoginActivity.exists({ user: registeredUserId }), null, 'registration fixture activity must be removed');
     }
     await mongoose.disconnect();
   }
